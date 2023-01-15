@@ -2,19 +2,16 @@ package com.example.doughcalculator
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.doughcalculator.common.extensions.showErrorAlertDialog
 import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.databinding.ActivityMainBinding
 import moxy.MvpAppCompatActivity
-import androidx.annotation.MainThread as MainThread
 
 class MainActivity : MvpAppCompatActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
     private val ratioModel by lazy { ViewModelProvider(this)[RatioModel::class.java] }
-    //private val ratio = Ratio()
     private var isError = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,102 +30,110 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     private fun calculateIngredientPercent(gram: Short): Double {
-        return (gram * 100 / ratioModel.flourGram.value!!).toDouble()
+        return (gram * 100.00 / ratioModel.flourGram!!)
     }
 
     private fun recalculateIngredientGram(percent: Double, newGram: Short): Int {
-        return (newGram * percent / 100).toInt()
+        return (newGram * percent / 100.00).toInt()
     }
 
     override fun calculateWaterPercent() {
-        if (ratioModel.waterGram.value == null
-            || ratioModel.waterGram.value!! == SHORT_ZERO) {
+        if (ratioModel.waterGram == null
+            || ratioModel.waterGram!! == SHORT_ZERO) {
             this.showErrorAlertDialog(R.string.error_invalid_water_input)
             isError = true
             return
         }
-        ratioModel.waterPercent.value = calculateIngredientPercent(ratioModel.waterGram.value!!)
+        ratioModel.waterPercent
+            .set(calculateIngredientPercent(ratioModel.waterGram!!))
         isError = false
     }
 
     override fun calculateSaltPercent() {
-        if (ratioModel.saltGram.value == null
-            || ratioModel.saltGram.value!! == SHORT_ZERO) {
+        if (ratioModel.saltGram == null
+            || ratioModel.saltGram!! == SHORT_ZERO) {
             this.showErrorAlertDialog(R.string.error_invalid_salt_input)
             isError = true
             return
         }
-        ratioModel.saltPercent.value = calculateIngredientPercent(ratioModel.saltGram.value!!)
+        ratioModel.saltPercent
+            .set(calculateIngredientPercent(ratioModel.saltGram!!))
         isError = false
     }
 
     override fun calculateSugarPercent() {
-        if (ratioModel.sugarGram.value == null
-            || ratioModel.sugarGram.value!! == SHORT_ZERO) {
-            ratioModel.sugarPercent.value = null
+        if (ratioModel.sugarGram == null
+            || ratioModel.sugarGram!! == SHORT_ZERO) {
+            ratioModel.sugarPercent.set(null)
             return
         }
-        ratioModel.sugarPercent.value = calculateIngredientPercent(ratioModel.sugarGram.value!!)
+        ratioModel.sugarPercent
+            .set(calculateIngredientPercent(ratioModel.sugarGram!!))
     }
 
     override fun calculateButterPercent() {
-        if (ratioModel.butterGram.value == null
-            || ratioModel.butterGram.value!! == SHORT_ZERO) {
-            ratioModel.butterPercent.value = null
+        if (ratioModel.butterGram == null
+            || ratioModel.butterGram!! == SHORT_ZERO) {
+            ratioModel.butterPercent.set(null)
             return
         }
-        ratioModel.butterPercent.value = calculateIngredientPercent(ratioModel.butterGram.value!!)
+        ratioModel.butterPercent
+            .set(calculateIngredientPercent(ratioModel.butterGram!!))
     }
 
     override fun recalculateWaterGram() {
-        if (ratioModel.waterPercent.value == null) {
+        if (ratioModel.waterPercent.get() == null) {
             this.showErrorAlertDialog(R.string.error_invalid_water_percent)
             return
         }
-        val percent = ratioModel.waterPercent.value!!
-        ratioModel.waterGramCorrection.value = recalculateIngredientGram(percent, ratioModel.flourGramCorrection.value!!).toShort()
+        val percent = ratioModel.waterPercent.get()!!
+        ratioModel.waterGramCorrection
+            .set(recalculateIngredientGram(percent, ratioModel.flourGramCorrection!!).toShort())
     }
 
     override fun recalculateSaltGram() {
-        if (ratioModel.saltPercent.value == null) {
+        if (ratioModel.saltPercent.get() == null) {
             this.showErrorAlertDialog(R.string.error_invalid_salt_percent)
             return
         }
-        val percent = ratioModel.saltPercent.value!!
-        ratioModel.saltGramCorrection.value = recalculateIngredientGram(percent, ratioModel.flourGramCorrection.value!!).toShort()
+        val percent = ratioModel.saltPercent.get()!!
+        ratioModel.saltGramCorrection
+            .set(recalculateIngredientGram(percent, ratioModel.flourGramCorrection!!).toShort())
     }
 
     override fun recalculateSugarGram() {
-        if (ratioModel.sugarGram.value == null
-            || ratioModel.sugarGram.value!! == SHORT_ZERO) {
-            ratioModel.sugarGramCorrection.value = null
+        if (ratioModel.sugarGram == null
+            || ratioModel.sugarGram!! == SHORT_ZERO) {
+            ratioModel.sugarGramCorrection.set(null)
             return
         }
-        if (ratioModel.sugarPercent.value == null) {
+        if (ratioModel.sugarPercent.get() == null) {
             this.showErrorAlertDialog(R.string.error_invalid_sugar_percent)
             return
         }
-        val percent = ratioModel.sugarPercent.value!!
-        ratioModel.sugarGramCorrection.value = recalculateIngredientGram(percent, ratioModel.flourGramCorrection.value!!).toShort()
+        val percent = ratioModel.sugarPercent.get()!!
+        ratioModel.sugarGramCorrection
+            .set(recalculateIngredientGram(percent, ratioModel.flourGramCorrection!!).toShort())
     }
 
     override fun recalculateButterGram() {
-        if (ratioModel.butterGram.value == null
-            || ratioModel.butterGram.value!! == SHORT_ZERO) {
-            ratioModel.butterGramCorrection.value = null
+        if (ratioModel.butterGram == null
+            || ratioModel.butterGram!! == SHORT_ZERO) {
+            ratioModel.butterGramCorrection.set(null)
             return
         }
-        if (ratioModel.butterPercent.value == null) {
+        if (ratioModel.butterPercent.get() == null) {
             this.showErrorAlertDialog(R.string.error_invalid_butter_percent)
             return
         }
-        val percent = ratioModel.butterPercent.value!!
-        ratioModel.butterGramCorrection.value = recalculateIngredientGram(percent, ratioModel.flourGramCorrection.value!!).toShort()
+        val percent = ratioModel.butterPercent.get()!!
+        ratioModel.butterGramCorrection
+            .set(recalculateIngredientGram(percent, ratioModel.flourGramCorrection!!).toShort())
     }
 
     override fun calculateAll() {
-        if (ratioModel.flourGram.value == null
-            || ratioModel.flourGram.value!! == SHORT_ZERO) {
+        if (ratioModel.flourGram == null
+            || ratioModel.flourGram!! == SHORT_ZERO) {
             this.showErrorAlertDialog(R.string.error_invalid_flour_input)
             return
         }
@@ -140,8 +145,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         calculateSugarPercent()
         calculateButterPercent()
 
-        if (ratioModel.flourGramCorrection.value != null
-            && ratioModel.flourGramCorrection.value!! > SHORT_ZERO) {
+        if (ratioModel.flourGramCorrection != null
+            && ratioModel.flourGramCorrection!! > SHORT_ZERO) {
             recalculateWaterGram()
             recalculateSaltGram()
             recalculateSugarGram()
