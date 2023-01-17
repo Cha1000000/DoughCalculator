@@ -137,7 +137,8 @@ class RatioModel : ViewModel() {
         object: ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                waterPercentBindingVariable.set(value.toString())
+                waterPercentBindingVariable.set(value.toString()
+                    .replace(".0", ""))
             }
         }
     var waterPercentBindingVariable = ObservableField("")
@@ -146,7 +147,8 @@ class RatioModel : ViewModel() {
         object: ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                saltPercentBindingVariable.set(value.toString())
+                saltPercentBindingVariable.set(value.toString()
+                    .replace(".0", ""))
             }
         }
     var saltPercentBindingVariable = ObservableField("")
@@ -155,7 +157,8 @@ class RatioModel : ViewModel() {
         object: ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                sugarPercentBindingVariable.set(value?.toString() ?: "")
+                sugarPercentBindingVariable
+                    .set(value?.toString()?.replace(".0", "") ?: "")
             }
         }
     var sugarPercentBindingVariable = ObservableField("")
@@ -164,7 +167,8 @@ class RatioModel : ViewModel() {
         object: ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                butterPercentBindingVariable.set(value?.toString() ?: "")
+                butterPercentBindingVariable
+                    .set(value?.toString()?.replace(".0", "") ?: "")
             }
         }
     var butterPercentBindingVariable = ObservableField("")

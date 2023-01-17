@@ -5,7 +5,7 @@
     <string name="salt">Соль</string>
     <string name="sugar_honey">Сахар</string>
     <string name="butter">Масло</string>
-    <string name="title_ingredient">Ингредиент</string>
+    <string name="title_ingredient">Состав</string>
     <string name="title_grams">грамм</string>
     <string name="title_percent">%</string>
     <string name="title_correction">Изменить</string>

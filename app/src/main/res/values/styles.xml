@@ -11,6 +11,7 @@
     <style name="ingredient_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/ingredient_text_size</item>
@@ -21,7 +22,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">9dp</item>
         <item name="android:layout_marginTop">9dp</item>
-        <item name="android:layout_marginRight">9dp</item>
+        <item name="android:layout_marginRight">6dp</item>
         <item name="android:layout_marginBottom">3dp</item>
     </style>
 
