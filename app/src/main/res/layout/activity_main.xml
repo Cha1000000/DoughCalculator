@@ -50,35 +50,23 @@
 
                     <TextView
                         style="@style/table_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/title_ingredient"
                         tools:ignore="RtlSymmetry,TextContrastCheck" />
 
                     <TextView
                         style="@style/table_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/title_grams"
                         android:textAlignment="center"
                         tools:ignore="TextContrastCheck" />
 
                     <TextView
                         style="@style/table_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/title_percent"
                         android:textAlignment="center"
                         tools:ignore="TextContrastCheck" />
 
                     <TextView
                         style="@style/table_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/title_correction"
                         android:textAlignment="center"
                         tools:ignore="TextContrastCheck" />

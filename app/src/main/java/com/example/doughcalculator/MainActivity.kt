@@ -163,15 +163,15 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun validate() {
         // assert ratioModel.waterPercent is not null
         if (ratioModel.waterPercent.get()!! in 60.1..80.0) {
-            binding.tvWaterValidation.visibility = View.VISIBLE
-            binding.etWaterGrams.setTextColor(getColor(R.color.text_red))
-            binding.tvWaterPercent.setTextColor(getColor(R.color.text_red))
-            binding.tvWaterGramsCorrection.setTextColor(getColor(R.color.text_red))
-        } else {
             binding.tvWaterValidation.visibility = View.GONE
             binding.etWaterGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
             binding.tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
             binding.tvWaterGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+        } else {
+            binding.tvWaterValidation.visibility = View.VISIBLE
+            binding.etWaterGrams.setTextColor(getColor(R.color.text_red))
+            binding.tvWaterPercent.setTextColor(getColor(R.color.text_red))
+            binding.tvWaterGramsCorrection.setTextColor(getColor(R.color.text_red))
         }
         // assert ratioModel.saltPercent is not null
         if (ratioModel.saltPercent.get()!! > 2.5) {
