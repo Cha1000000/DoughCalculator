@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Dough Calculator"
-include ':app'
+include ':DoughCalculator'
