@@ -173,6 +173,18 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             binding.tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
             binding.tvWaterGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
         }
+        // assert ratioModel.saltPercent is not null
+        if (ratioModel.saltPercent.get()!! > 2.5) {
+            binding.tvSaltValidation.visibility = View.VISIBLE
+            binding.etSaltGrams.setTextColor(getColor(R.color.text_red))
+            binding.tvSaltPercent.setTextColor(getColor(R.color.text_red))
+            binding.tvSaltGramsCorrection.setTextColor(getColor(R.color.text_red))
+        } else {
+            binding.tvSaltValidation.visibility = View.GONE
+            binding.etSaltGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
+            binding.tvSaltPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+            binding.tvSaltGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+        }
     }
 
     companion object {

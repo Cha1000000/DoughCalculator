@@ -182,6 +182,17 @@
 
                 </TableRow>
 
+                <TextView
+                    android:id="@+id/tv_salt_validation"
+                    style="@style/TextInputLayoutError"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="9dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/error_alert_salt_invalid_range"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
                 <TableRow style="@style/table_row">
 
                     <TextView
