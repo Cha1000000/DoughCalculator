@@ -25,4 +25,6 @@
     <string name="error_invalid_salt_percent">Не расчитан % соли</string>
     <string name="error_invalid_sugar_percent">Не расчитан % сахара</string>
     <string name="error_invalid_butter_percent">Не расчитан % масла</string>
+    <string name="error_alert_salt_invalid_range">допустимая норма превышена (не более 2,5%)</string>
+    <string name="alert_water_valid_range">допустимый диапазон: 60–80%</string>
 </resources>

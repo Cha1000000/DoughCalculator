@@ -1,8 +1,11 @@
 package com.example.doughcalculator
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.doughcalculator.common.extensions.getColorResCompat
 import com.example.doughcalculator.common.extensions.showErrorAlertDialog
 import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.databinding.ActivityMainBinding
@@ -145,12 +148,30 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         calculateSugarPercent()
         calculateButterPercent()
 
+        validate()
+
         if (ratioModel.flourGramCorrection != null
             && ratioModel.flourGramCorrection!! > SHORT_ZERO) {
             recalculateWaterGram()
             recalculateSaltGram()
             recalculateSugarGram()
             recalculateButterGram()
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    override fun validate() {
+        // assert ratioModel.waterPercent is not null
+        if (ratioModel.waterPercent.get()!! in 60.1..80.0) {
+            binding.tvWaterValidation.visibility = View.VISIBLE
+            binding.etWaterGrams.setTextColor(getColor(R.color.text_red))
+            binding.tvWaterPercent.setTextColor(getColor(R.color.text_red))
+            binding.tvWaterGramsCorrection.setTextColor(getColor(R.color.text_red))
+        } else {
+            binding.tvWaterValidation.visibility = View.GONE
+            binding.etWaterGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
+            binding.tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+            binding.tvWaterGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
         }
     }
 
