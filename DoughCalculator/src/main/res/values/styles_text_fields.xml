@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextInputLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="hintTextAppearance">@style/TextInputLayoutHint</item>
+        <item name="errorTextAppearance">@style/TextInputLayoutError.Default</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="errorIconDrawable">@null</item>
+    </style>
+
+    <style name="TextInputLayoutError">
+        <item name="android:textColor">@color/text_red</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="TextInputLayoutError.Default">
+        <item name="android:textColor">@color/text_red</item>
+    </style>
+
+    <style name="TextInputLayoutError.Warning">
+        <item name="android:textColor">@color/text_orange</item>
+    </style>
+
+    <style name="TextInputEditText" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@color/light_gray</item>
+        <item name="android:textSize">@dimen/text_input_layout_edit_text_size</item>
+        <item name="android:textColorHint">@color/edit_text_hint_selector</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:importantForAutofill">no</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="TextInputEditText.Digits">
+        <item name="android:inputType">number</item>
+        <item name="android:digits">0123456789</item>
+        <item name="android:maxLength">4</item>
+        <item name="android:hint">@string/hint_zero</item>
+    </style>
+
+    <style name="TextInputLayoutHint">
+        <item name="android:textColor">@color/edit_text_hint_selector</item>
+        <item name="android:textSize">@dimen/text_input_layout_hint_text_size</item>
+    </style>
+
+    <style name="TextViewReadOnly">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:elegantTextHeight">true</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+</resources>
