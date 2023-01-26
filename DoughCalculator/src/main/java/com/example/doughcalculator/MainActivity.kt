@@ -20,11 +20,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //binding = ActivityMainBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.ratio = ratioModel
         binding.btCalculate.setOnClickListener { calculate() }
+        //setContentView(binding.root)
     }
 
     private fun calculate() {

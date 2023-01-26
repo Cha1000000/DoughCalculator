@@ -43,61 +43,61 @@ class RatioModel : ViewModel() {
     // Grams
     var flourGram: Short? = null
     var flourGramBindingVariable =
-        object: ObservableField<String>("") {
+        object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
-                flourGram = value?.toShortOrNull() ?: flourGram
+                flourGram = value?.toShortOrNull()
             }
         }
 
     var waterGram: Short? = null
     var waterGramBindingVariable =
-        object: ObservableField<String>("") {
+        object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
-                waterGram = value?.toShortOrNull() ?: waterGram
+                waterGram = value?.toShortOrNull()
             }
         }
 
     var saltGram: Short? = null
     var saltGramBindingVariable =
-        object: ObservableField<String>("") {
+        object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
-                saltGram = value?.toShortOrNull() ?: saltGram
+                saltGram = value?.toShortOrNull()
             }
         }
 
     var sugarGram: Short? = null
     var sugarGramBindingVariable =
-        object: ObservableField<String>("") {
+        object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
-                sugarGram = value?.toShortOrNull() ?: sugarGram
+                sugarGram = value?.toShortOrNull()
             }
         }
 
     var butterGram: Short? = null
     var butterGramBindingVariable =
-        object: ObservableField<String>("") {
+        object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
-                butterGram = value?.toShortOrNull() ?: butterGram
+                butterGram = value?.toShortOrNull()
             }
         }
 
     // Gram corrections
     var flourGramCorrection: Short? = null
     var flourGramCorrectionBindingVariable =
-        object: ObservableField<String>("") {
+        object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
                 flourGramCorrection = value?.toShortOrNull() ?: flourGramCorrection
             }
         }
 
-    var waterGramCorrection=
-        object: ObservableField<Short?>() {
+    var waterGramCorrection =
+        object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
                 waterGramCorrectionBindingVariable.set(value.toString())
@@ -105,8 +105,8 @@ class RatioModel : ViewModel() {
         }
     var waterGramCorrectionBindingVariable = ObservableField("")
 
-    var saltGramCorrection=
-        object: ObservableField<Short?>() {
+    var saltGramCorrection =
+        object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
                 saltGramCorrectionBindingVariable.set(value.toString())
@@ -114,8 +114,8 @@ class RatioModel : ViewModel() {
         }
     var saltGramCorrectionBindingVariable = ObservableField("")
 
-    var sugarGramCorrection=
-        object: ObservableField<Short?>() {
+    var sugarGramCorrection =
+        object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
                 sugarGramCorrectionBindingVariable.set(value?.toString() ?: "")
@@ -123,8 +123,8 @@ class RatioModel : ViewModel() {
         }
     var sugarGramCorrectionBindingVariable = ObservableField("")
 
-    var butterGramCorrection=
-        object: ObservableField<Short?>() {
+    var butterGramCorrection =
+        object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
                 butterGramCorrectionBindingVariable.set(value?.toString() ?: "")
@@ -134,41 +134,39 @@ class RatioModel : ViewModel() {
 
     // Percents
     var waterPercent =
-        object: ObservableField<Double?>() {
+        object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                waterPercentBindingVariable.set(value.toString()
-                    .replace(".0", ""))
+                waterPercentBindingVariable.set(String.format("%.0f", value))
             }
         }
     var waterPercentBindingVariable = ObservableField("")
 
-    var saltPercent=
-        object: ObservableField<Double?>() {
+    var saltPercent =
+        object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                saltPercentBindingVariable.set(value.toString()
-                    .replace(".0", ""))
+                saltPercentBindingVariable.set(String.format("%.0f", value))
             }
         }
     var saltPercentBindingVariable = ObservableField("")
 
-    var sugarPercent=
-        object: ObservableField<Double?>() {
+    var sugarPercent =
+        object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                sugarPercentBindingVariable
-                    .set(value?.toString()?.replace(".0", "") ?: "")
+                val strValue = if (value == null || value < 0.1) "" else String.format("%.0f", value)
+                sugarPercentBindingVariable.set(strValue)
             }
         }
     var sugarPercentBindingVariable = ObservableField("")
 
-    var butterPercent=
-        object: ObservableField<Double?>() {
+    var butterPercent =
+        object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                butterPercentBindingVariable
-                    .set(value?.toString()?.replace(".0", "") ?: "")
+                val strValue = if (value == null || value < 0.1) "" else String.format("%.0f", value)
+                butterPercentBindingVariable.set(strValue)
             }
         }
     var butterPercentBindingVariable = ObservableField("")
