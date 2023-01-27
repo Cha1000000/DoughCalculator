@@ -1,4 +1,4 @@
-package com.example.doughcalculator
+package com.example.doughcalculator.screens.main
 
 import androidx.annotation.StringRes
 import moxy.MvpView
@@ -12,4 +12,7 @@ interface MainView: MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun validate()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun closeKeyboard()
 }

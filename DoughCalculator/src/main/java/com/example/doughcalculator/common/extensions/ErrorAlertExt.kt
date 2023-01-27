@@ -6,7 +6,7 @@ import androidx.annotation.StringRes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.example.doughcalculator.R
 import com.example.doughcalculator.common.exceptions.ExceptionInfo
-import com.example.doughcalculator.MainActivity.Companion.FIRE_BUTTON_KEY_CODE
+import com.example.doughcalculator.screens.main.MainActivity.Companion.FIRE_BUTTON_KEY_CODE
 
 
 fun Context.showErrorAlertDialog(

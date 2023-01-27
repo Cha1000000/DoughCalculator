@@ -1,15 +1,18 @@
-package com.example.doughcalculator
+package com.example.doughcalculator.screens.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
+import com.example.doughcalculator.R
 import com.example.doughcalculator.common.extensions.getColorResCompat
+import com.example.doughcalculator.common.extensions.hideKeyboard
 import com.example.doughcalculator.common.extensions.showErrorAlertDialog
 import com.example.doughcalculator.data.BaseViewModel
 import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.databinding.ActivityMainBinding
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import org.koin.android.ext.android.inject
@@ -32,6 +35,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         setContentView(binding.root)
     }
 
+    override fun onResume() {
+        super.onResume()
+        window.decorView.clearFocus()
+    }
+
     companion object {
         const val FIRE_BUTTON_KEY_CODE = 293
         var SHORT_ZERO = 0.toShort()
@@ -39,6 +47,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun showError(@StringRes msgRes: Int) {
         this.showErrorAlertDialog(msgRes)
+    }
+
+    override fun closeKeyboard() {
+        hideKeyboard()
     }
 
     @SuppressLint("ResourceAsColor")

@@ -1,6 +1,7 @@
-package com.example.doughcalculator
+package com.example.doughcalculator.screens.main
 
-import com.example.doughcalculator.MainActivity.Companion.SHORT_ZERO
+import com.example.doughcalculator.R
+import com.example.doughcalculator.screens.main.MainActivity.Companion.SHORT_ZERO
 import com.example.doughcalculator.data.BaseViewModel
 import moxy.InjectViewState
 import moxy.MvpPresenter
@@ -37,6 +38,7 @@ class MainPresenter : MvpPresenter<MainView>(), KoinComponent {
             recalculateSugarGram()
             recalculateButterGram()
         }
+        viewState.closeKeyboard()
     }
 
     private fun calculateIngredientPercent(gram: Short): Double {
