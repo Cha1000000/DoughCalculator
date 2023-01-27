@@ -2,9 +2,8 @@ package com.example.doughcalculator.data
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import org.koin.core.component.KoinComponent
 
-class RatioModel : ViewModel(), KoinComponent {
+class RatioModel : ViewModel(), BaseViewModel {
     /*
         private val _flourGram: MutableLiveData<Short?> = MutableLiveData(null)
         private val _waterGram: MutableLiveData<Short?> = MutableLiveData(null)
@@ -42,7 +41,7 @@ class RatioModel : ViewModel(), KoinComponent {
     */
 
     // Grams
-    var flourGram: Short? = null
+    override var flourGram: Short? = null
     var flourGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
@@ -51,7 +50,7 @@ class RatioModel : ViewModel(), KoinComponent {
             }
         }
 
-    var waterGram: Short? = null
+    override var waterGram: Short? = null
     var waterGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
@@ -60,7 +59,7 @@ class RatioModel : ViewModel(), KoinComponent {
             }
         }
 
-    var saltGram: Short? = null
+    override var saltGram: Short? = null
     var saltGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
@@ -69,7 +68,7 @@ class RatioModel : ViewModel(), KoinComponent {
             }
         }
 
-    var sugarGram: Short? = null
+    override var sugarGram: Short? = null
     var sugarGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
@@ -78,7 +77,7 @@ class RatioModel : ViewModel(), KoinComponent {
             }
         }
 
-    var butterGram: Short? = null
+    override var butterGram: Short? = null
     var butterGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
@@ -88,7 +87,7 @@ class RatioModel : ViewModel(), KoinComponent {
         }
 
     // Gram corrections
-    var flourGramCorrection: Short? = null
+    override var flourGramCorrection: Short? = null
     var flourGramCorrectionBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
@@ -97,7 +96,7 @@ class RatioModel : ViewModel(), KoinComponent {
             }
         }
 
-    var waterGramCorrection =
+    override var waterGramCorrection =
         object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
@@ -106,7 +105,7 @@ class RatioModel : ViewModel(), KoinComponent {
         }
     var waterGramCorrectionBindingVariable = ObservableField("")
 
-    var saltGramCorrection =
+    override var saltGramCorrection =
         object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
@@ -115,7 +114,7 @@ class RatioModel : ViewModel(), KoinComponent {
         }
     var saltGramCorrectionBindingVariable = ObservableField("")
 
-    var sugarGramCorrection =
+    override var sugarGramCorrection =
         object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
@@ -124,7 +123,7 @@ class RatioModel : ViewModel(), KoinComponent {
         }
     var sugarGramCorrectionBindingVariable = ObservableField("")
 
-    var butterGramCorrection =
+    override var butterGramCorrection =
         object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
@@ -134,7 +133,7 @@ class RatioModel : ViewModel(), KoinComponent {
     var butterGramCorrectionBindingVariable = ObservableField("")
 
     // Percents
-    var waterPercent =
+    override var waterPercent =
         object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
@@ -143,7 +142,7 @@ class RatioModel : ViewModel(), KoinComponent {
         }
     var waterPercentBindingVariable = ObservableField("")
 
-    var saltPercent =
+    override var saltPercent =
         object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
@@ -152,7 +151,7 @@ class RatioModel : ViewModel(), KoinComponent {
         }
     var saltPercentBindingVariable = ObservableField("")
 
-    var sugarPercent =
+    override var sugarPercent =
         object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
@@ -162,7 +161,7 @@ class RatioModel : ViewModel(), KoinComponent {
         }
     var sugarPercentBindingVariable = ObservableField("")
 
-    var butterPercent =
+    override var butterPercent =
         object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
