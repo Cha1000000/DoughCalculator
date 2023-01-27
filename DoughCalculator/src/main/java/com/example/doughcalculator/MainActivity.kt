@@ -10,12 +10,18 @@ import com.example.doughcalculator.common.extensions.showErrorAlertDialog
 import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.databinding.ActivityMainBinding
 import moxy.MvpAppCompatActivity
+import moxy.presenter.InjectPresenter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : MvpAppCompatActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
-    private val ratioModel by lazy { ViewModelProvider(this)[RatioModel::class.java] }
+    //private val ratioModel by lazy { ViewModelProvider(this)[RatioModel::class.java] }
+    private val ratioModel: RatioModel  by viewModel()
     private var isError = false
+
+    @InjectPresenter
+    internal lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,13 +29,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.ratio = ratioModel
-        binding.btCalculate.setOnClickListener { calculate() }
-        //setContentView(binding.root)
-    }
-
-    private fun calculate() {
-        calculateAll()
-        //binding.invalidateAll()
+        binding.btCalculate.setOnClickListener { presenter.onCalculate() }
+        setContentView(binding.root)
     }
 
     private fun calculateIngredientPercent(gram: Short): Double {
@@ -47,8 +48,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             isError = true
             return
         }
-        ratioModel.waterPercent
-            .set(calculateIngredientPercent(ratioModel.waterGram!!))
+        ratioModel.waterPercent.set(calculateIngredientPercent(ratioModel.waterGram!!))
         isError = false
     }
 
@@ -59,8 +59,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             isError = true
             return
         }
-        ratioModel.saltPercent
-            .set(calculateIngredientPercent(ratioModel.saltGram!!))
+        ratioModel.saltPercent.set(calculateIngredientPercent(ratioModel.saltGram!!))
         isError = false
     }
 
@@ -70,8 +69,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             ratioModel.sugarPercent.set(null)
             return
         }
-        ratioModel.sugarPercent
-            .set(calculateIngredientPercent(ratioModel.sugarGram!!))
+        ratioModel.sugarPercent.set(calculateIngredientPercent(ratioModel.sugarGram!!))
     }
 
     override fun calculateButterPercent() {
@@ -80,8 +78,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             ratioModel.butterPercent.set(null)
             return
         }
-        ratioModel.butterPercent
-            .set(calculateIngredientPercent(ratioModel.butterGram!!))
+        ratioModel.butterPercent.set(calculateIngredientPercent(ratioModel.butterGram!!))
     }
 
     override fun recalculateWaterGram() {

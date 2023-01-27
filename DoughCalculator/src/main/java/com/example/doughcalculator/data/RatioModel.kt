@@ -2,8 +2,9 @@ package com.example.doughcalculator.data
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import org.koin.core.component.KoinComponent
 
-class RatioModel : ViewModel() {
+class RatioModel : ViewModel(), KoinComponent {
     /*
         private val _flourGram: MutableLiveData<Short?> = MutableLiveData(null)
         private val _waterGram: MutableLiveData<Short?> = MutableLiveData(null)
