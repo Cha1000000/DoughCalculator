@@ -4,7 +4,7 @@ plugins {
 }
 
 apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
+//apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
 
 android {
@@ -23,9 +23,9 @@ android {
         archivesBaseName = "DoughCalculator v" + versionName
     }
 
-    androidExtensions {
+    /*androidExtensions {
         experimental = true
-    }
+    }*/
 
     buildTypes {
         release {

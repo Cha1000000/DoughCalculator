@@ -12,7 +12,6 @@ import com.example.doughcalculator.common.extensions.showErrorAlertDialog
 import com.example.doughcalculator.data.BaseViewModel
 import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.databinding.ActivityMainBinding
-import com.google.android.material.internal.ViewUtils.hideKeyboard
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import org.koin.android.ext.android.inject
