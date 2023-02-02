@@ -2,7 +2,10 @@ package com.example.doughcalculator.screens.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import com.example.doughcalculator.R
@@ -37,6 +40,23 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun onResume() {
         super.onResume()
         window.decorView.clearFocus()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.mi_save -> {
+                //TODO call save logic in presenter
+            }
+            R.id.mi_open -> {
+                //TODO call open logic in presenter
+            }
+        }
+        return true
     }
 
     companion object {
