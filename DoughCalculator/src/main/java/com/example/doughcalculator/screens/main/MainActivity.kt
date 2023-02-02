@@ -31,7 +31,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         binding.lifecycleOwner = this
         binding.ratio = ratioModel as RatioModel?
         binding.btCalculate.setOnClickListener { presenter.onCalculate() }
-        setContentView(binding.root)
+        //setContentView(binding.root)
     }
 
     override fun onResume() {
