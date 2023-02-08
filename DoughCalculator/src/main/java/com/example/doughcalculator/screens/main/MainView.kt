@@ -15,4 +15,7 @@ interface MainView: MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun closeKeyboard()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showSaveRecipeDialog()
 }

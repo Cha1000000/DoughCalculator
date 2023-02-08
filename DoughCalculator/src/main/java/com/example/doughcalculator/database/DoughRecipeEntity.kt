@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "dough_recipes_table")
-data class DoughRecipe(
+data class DoughRecipeEntity(
     @PrimaryKey(autoGenerate = true)
     var recipeId: Long = 0L,
 

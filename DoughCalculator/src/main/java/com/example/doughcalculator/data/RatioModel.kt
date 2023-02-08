@@ -1,9 +1,11 @@
 package com.example.doughcalculator.data
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class RatioModel : ViewModel(), BaseViewModel {
+class RatioModel : ViewModel(), BaseRatioModel {
     /*
         private val _flourGram: MutableLiveData<Short?> = MutableLiveData(null)
         private val _waterGram: MutableLiveData<Short?> = MutableLiveData(null)
@@ -39,6 +41,12 @@ class RatioModel : ViewModel(), BaseViewModel {
         val sugarPercent: MutableLiveData<Double?> = _sugarPercent
         val butterPercent: MutableLiveData<Double?> = _butterPercent
     */
+
+    override var recipeId: Long = 0L
+
+    override var recipeTitle: String = ""
+    override var description: String = ""
+    override var isFavorite: Boolean = false
 
     // Grams
     override var flourGram: Short? = null
@@ -155,7 +163,8 @@ class RatioModel : ViewModel(), BaseViewModel {
         object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                val strValue = if (value == null || value < 0.1) "" else String.format("%.0f", value)
+                val strValue =
+                    if (value == null || value < 0.1) "" else String.format("%.0f", value)
                 sugarPercentBindingVariable.set(strValue)
             }
         }
@@ -165,10 +174,13 @@ class RatioModel : ViewModel(), BaseViewModel {
         object : ObservableField<Double?>() {
             override fun set(value: Double?) {
                 super.set(value)
-                val strValue = if (value == null || value < 0.1) "" else String.format("%.0f", value)
+                val strValue =
+                    if (value == null || value < 0.1) "" else String.format("%.0f", value)
                 butterPercentBindingVariable.set(strValue)
             }
         }
     var butterPercentBindingVariable = ObservableField("")
 
+
+    override fun isUpdate(): Boolean = recipeId > 0L
 }

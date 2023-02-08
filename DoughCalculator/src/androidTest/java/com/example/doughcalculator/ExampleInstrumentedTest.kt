@@ -1,9 +1,11 @@
 package com.example.doughcalculator
 
+import android.content.Context
 import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.doughcalculator.database.DoughRecipe
+import com.example.doughcalculator.database.DoughRecipeEntity
 import com.example.doughcalculator.database.DoughRecipeDao
 import com.example.doughcalculator.database.DoughRecipesDatabase
 import org.junit.After
@@ -25,7 +27,7 @@ class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val appContext = ApplicationProvider.getApplicationContext<Context>()
         assertEquals("com.example.doughcalculator", appContext.packageName)
     }
 }
@@ -38,11 +40,11 @@ class DatabaseTest {
 
     @Before
     fun createDb() {
-        val context= InstrumentationRegistry.getInstrumentation().targetContext
+        val context= ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, DoughRecipesDatabase::class.java)
             .allowMainThreadQueries()
             .build()
-        recipeDao = db.recipeDao
+        recipeDao = db.getRecipeDao()
     }
 
     @After
@@ -54,9 +56,10 @@ class DatabaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetRecipe() {
-        val recipe = DoughRecipe(title = "багет", isFavorite = true)
+        val recipe = DoughRecipeEntity(title = "Багет", isFavorite = true)
         recipeDao.insert(recipe)
-        val readRecipe = recipeDao.get("багет")
+        val readRecipe = recipeDao.getByTitle("Багет")
         assertEquals(readRecipe.isFavorite, true)
+        assertEquals(readRecipe.title, "Багет")
     }
 }

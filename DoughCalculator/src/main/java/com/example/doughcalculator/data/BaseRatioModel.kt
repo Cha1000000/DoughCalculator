@@ -2,7 +2,8 @@ package com.example.doughcalculator.data
 
 import androidx.databinding.ObservableField
 
-interface BaseViewModel {
+interface BaseRatioModel : BaseRecipeModel {
+
     var flourGram: Short?
     var waterGram: Short?
     var saltGram: Short?
@@ -19,4 +20,6 @@ interface BaseViewModel {
     var saltPercent: ObservableField<Double?>
     var sugarPercent: ObservableField<Double?>
     var butterPercent: ObservableField<Double?>
+
+    fun isUpdate(): Boolean
 }

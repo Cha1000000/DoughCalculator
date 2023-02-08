@@ -11,7 +11,11 @@
     <string name="title_correction">Изменить</string>
     <string name="hint_zero">0</string>
     <string name="flour_const_percent">100</string>
+    <string name="recipe_title">Название</string>
+    <string name="text_field_description">Описание</string>
+
     <string name="button_calculate_text">Расчитать</string>
+    <string name="button_save_text">Сохранить</string>
 
     <string name="error_alert_title_error">Ошибка</string>
     <string name="error_alert_title_warning">Предупреждение</string>
@@ -30,4 +34,6 @@
 
     <string name="menu_item_save">Сохранить рецепт</string>
     <string name="menu_item_open">Открыть рецепт</string>
+    <string name="unknown_exception_title">Неизвестная ошибка</string>
+
 </resources>

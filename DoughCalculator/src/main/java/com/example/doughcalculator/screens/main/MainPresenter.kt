@@ -2,7 +2,7 @@ package com.example.doughcalculator.screens.main
 
 import com.example.doughcalculator.R
 import com.example.doughcalculator.screens.main.MainActivity.Companion.SHORT_ZERO
-import com.example.doughcalculator.data.BaseViewModel
+import com.example.doughcalculator.data.BaseRatioModel
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import org.koin.core.component.KoinComponent
@@ -11,7 +11,7 @@ import org.koin.core.component.inject
 @InjectViewState
 class MainPresenter : MvpPresenter<MainView>(), KoinComponent {
 
-    private val ratioModel: BaseViewModel by inject()
+    private val ratioModel: BaseRatioModel by inject()
     private var isError = false
 
     fun onCalculate() {
@@ -39,6 +39,10 @@ class MainPresenter : MvpPresenter<MainView>(), KoinComponent {
             recalculateButterGram()
         }
         viewState.closeKeyboard()
+    }
+
+    fun onShowSaveDialog(){
+        viewState.showSaveRecipeDialog()
     }
 
     private fun calculateIngredientPercent(gram: Short): Double {

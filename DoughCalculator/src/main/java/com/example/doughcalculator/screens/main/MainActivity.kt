@@ -1,20 +1,24 @@
 package com.example.doughcalculator.screens.main
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.doughcalculator.R
 import com.example.doughcalculator.common.extensions.getColorResCompat
 import com.example.doughcalculator.common.extensions.hideKeyboard
 import com.example.doughcalculator.common.extensions.showErrorAlertDialog
-import com.example.doughcalculator.data.BaseViewModel
+import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.RatioModel
+import com.example.doughcalculator.database.DoughRecipeDao
+import com.example.doughcalculator.database.DoughRecipesDatabase
 import com.example.doughcalculator.databinding.ActivityMainBinding
+import com.example.doughcalculator.screens.fragments.save.SaveRecipeFragment
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import org.koin.android.ext.android.inject
@@ -22,14 +26,18 @@ import org.koin.android.ext.android.inject
 class MainActivity : MvpAppCompatActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
+
     //private val ratioModel by lazy { ViewModelProvider(this)[RatioModel::class.java] }
-    private val ratioModel: BaseViewModel by inject()
+    private val ratioModel: BaseRatioModel by inject()
+    private var mainActionBar: androidx.appcompat.app.ActionBar? = null
 
     @InjectPresenter
     internal lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        appContext = this
+        mainActionBar = supportActionBar
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.ratio = ratioModel as RatioModel?
@@ -48,9 +56,9 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.mi_save -> {
-                //TODO call save logic in presenter
+                showSaveRecipeDialog()
             }
             R.id.mi_open -> {
                 //TODO call open logic in presenter
@@ -59,9 +67,21 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         return true
     }
 
+    override fun showSaveRecipeDialog() {
+        putFragment(SaveRecipeFragment.newInstance())
+    }
+
+    private fun putFragment(f: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_fragment_container, f)
+            .commit()
+    }
+
     companion object {
         const val FIRE_BUTTON_KEY_CODE = 293
-        var SHORT_ZERO = 0.toShort()
+        const val SHORT_ZERO = 0.toShort()
+        lateinit var appContext: Context
     }
 
     override fun showError(@StringRes msgRes: Int) {
@@ -79,7 +99,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             binding.tvWaterValidation.visibility = View.GONE
             binding.etWaterGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
             binding.tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-            binding.tvWaterGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+            binding.tvWaterGramsCorrection.setTextColor(
+                applicationContext!!.getColorResCompat(
+                    android.R.attr.textColorSecondary
+                )
+            )
         } else {
             binding.tvWaterValidation.visibility = View.VISIBLE
             binding.etWaterGrams.setTextColor(getColor(R.color.text_red))
@@ -96,7 +120,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             binding.tvSaltValidation.visibility = View.GONE
             binding.etSaltGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
             binding.tvSaltPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-            binding.tvSaltGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+            binding.tvSaltGramsCorrection.setTextColor(
+                applicationContext!!.getColorResCompat(
+                    android.R.attr.textColorSecondary
+                )
+            )
         }
     }
 }
