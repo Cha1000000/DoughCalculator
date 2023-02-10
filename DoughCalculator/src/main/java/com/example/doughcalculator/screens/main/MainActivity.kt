@@ -3,21 +3,23 @@ package com.example.doughcalculator.screens.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.addCallback
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.doughcalculator.R
+import com.example.doughcalculator.common.callback.OnBackPressedListener
 import com.example.doughcalculator.common.extensions.getColorResCompat
 import com.example.doughcalculator.common.extensions.hideKeyboard
 import com.example.doughcalculator.common.extensions.showErrorAlertDialog
 import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.RatioModel
-import com.example.doughcalculator.database.DoughRecipeDao
-import com.example.doughcalculator.database.DoughRecipesDatabase
 import com.example.doughcalculator.databinding.ActivityMainBinding
+import com.example.doughcalculator.screens.fragments.open.OpenRecipeFragment
 import com.example.doughcalculator.screens.fragments.save.SaveRecipeFragment
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
@@ -42,6 +44,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         binding.lifecycleOwner = this
         binding.ratio = ratioModel as RatioModel?
         binding.btCalculate.setOnClickListener { presenter.onCalculate() }
+        backButtonPressedListener()
         setContentView(binding.root)
     }
 
@@ -57,31 +60,52 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.mi_save -> {
-                showSaveRecipeDialog()
-            }
-            R.id.mi_open -> {
-                //TODO call open logic in presenter
-            }
+            R.id.mi_save -> presenter.onShowSaveDialog()
+            R.id.mi_open -> presenter.onShowOpenDialog()
         }
         return true
     }
 
-    override fun showSaveRecipeDialog() {
-        putFragment(SaveRecipeFragment.newInstance())
+    private fun backButtonPressedListener() {
+        onBackPressedDispatcher.addCallback(this ) {
+            val isNotHandled = forwardEventToFragments().not()
+            if (isNotHandled) {
+                val isEndOfBackStack = supportFragmentManager.backStackEntryCount == 0
+                if (isEndOfBackStack) {
+                    finish()
+                } else {
+                    Log.d("MainActivity", "back pressed, popBackStack")
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            } else {
+                Log.d("MainActivity", "back pressed, handled by a fragment")
+            }
+        }
     }
 
-    private fun putFragment(f: Fragment) {
+    private fun forwardEventToFragments(): Boolean {
+        val currentFragment =
+            supportFragmentManager.findFragmentById(R.id.main_fragment_container) ?: return false
+        return if (currentFragment is OnBackPressedListener) {
+            currentFragment.onBackPressed()
+        } else {
+            false
+        }
+    }
+
+    override fun showSaveRecipeDialog() {
+        showFragment(SaveRecipeFragment.getInstance())
+    }
+
+    override fun showOpenRecipeDialog() {
+        showFragment(OpenRecipeFragment.getInstance())
+    }
+
+    private fun showFragment(f: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.main_fragment_container, f)
             .commit()
-    }
-
-    companion object {
-        const val FIRE_BUTTON_KEY_CODE = 293
-        const val SHORT_ZERO = 0.toShort()
-        lateinit var appContext: Context
     }
 
     override fun showError(@StringRes msgRes: Int) {
@@ -127,4 +151,13 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             )
         }
     }
+
+    companion object {
+        const val FIRE_BUTTON_KEY_CODE = 293
+        const val SHORT_ZERO = 0.toShort()
+        lateinit var appContext: Context
+    }
+
 }
+
+fun Fragment.getMainActivity() = activity as MainActivity

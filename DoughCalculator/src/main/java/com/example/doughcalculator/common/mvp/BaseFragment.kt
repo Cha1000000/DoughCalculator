@@ -10,4 +10,11 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseView {
     override fun hideKeyboard() {
         view?.hideKeyboard()
     }
+
+    protected fun closeFragment() {
+        parentFragmentManager
+            .beginTransaction()
+            .remove(this)
+            .commit()
+    }
 }

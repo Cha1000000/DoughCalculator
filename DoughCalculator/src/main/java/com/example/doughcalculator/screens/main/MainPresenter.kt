@@ -45,6 +45,10 @@ class MainPresenter : MvpPresenter<MainView>(), KoinComponent {
         viewState.showSaveRecipeDialog()
     }
 
+    fun onShowOpenDialog(){
+        viewState.showOpenRecipeDialog()
+    }
+
     private fun calculateIngredientPercent(gram: Short): Double {
         return (gram * 100.00 / ratioModel.flourGram!!)
     }

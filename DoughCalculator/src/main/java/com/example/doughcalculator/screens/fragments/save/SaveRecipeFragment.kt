@@ -1,32 +1,29 @@
 package com.example.doughcalculator.screens.fragments.save
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import com.example.doughcalculator.R
+import com.example.doughcalculator.common.callback.OnBackPressedListener
 import com.example.doughcalculator.common.mvp.BaseFragment
 import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.RatioModel
-import com.example.doughcalculator.database.DoughRecipeDao
-import com.example.doughcalculator.database.DoughRecipeEntity
-import com.example.doughcalculator.database.DoughRecipesDatabase
 import com.example.doughcalculator.databinding.FragmentSaveRecipeBinding
-import com.example.doughcalculator.screens.main.MainActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import org.koin.android.ext.android.inject
 
-class SaveRecipeFragment : BaseFragment(), SaveRecipeView {
+class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener {
 
     private lateinit var binding: FragmentSaveRecipeBinding
     private val ratioModel: BaseRatioModel by inject()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(
@@ -54,9 +51,14 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView {
         }
     }
 
+    override fun onBackPressed(): Boolean {
+        closeFragment()
+        return true
+    }
+
     companion object {
         @JvmStatic
-        fun newInstance() = SaveRecipeFragment()
+        fun getInstance() = SaveRecipeFragment()
     }
 
     @InjectPresenter
@@ -66,9 +68,6 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView {
     fun providePresenter() = SaveRecipePresenter()
 
     override fun saveRecipe() {
-        parentFragmentManager
-            .beginTransaction()
-            .remove(this)
-            .commit()
+        closeFragment()
     }
 }
