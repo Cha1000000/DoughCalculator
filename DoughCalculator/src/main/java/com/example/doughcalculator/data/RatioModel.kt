@@ -50,57 +50,105 @@ class RatioModel : ViewModel(), BaseRatioModel {
 
     // Grams
     override var flourGram: Short? = null
+        set(value) {
+            field = value
+            flourGramBindingVariable.notifyChange()
+        }
     var flourGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
                 flourGram = value?.toShortOrNull()
             }
+
+            override fun get(): String? {
+                return flourGram?.toString() ?: ""
+            }
         }
 
     override var waterGram: Short? = null
+        set(value) {
+            field = value
+            waterGramBindingVariable.notifyChange()
+        }
     var waterGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
                 waterGram = value?.toShortOrNull()
             }
+
+            override fun get(): String? {
+                return waterGram?.toString() ?: ""
+            }
         }
 
     override var saltGram: Short? = null
+        set(value) {
+            field = value
+            saltGramBindingVariable.notifyChange()
+        }
     var saltGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
                 saltGram = value?.toShortOrNull()
             }
+
+            override fun get(): String? {
+                return saltGram?.toString() ?: ""
+            }
         }
 
     override var sugarGram: Short? = null
+        set(value) {
+            field = value
+            sugarGramBindingVariable.notifyChange()
+        }
     var sugarGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
                 sugarGram = value?.toShortOrNull()
             }
+
+            override fun get(): String? {
+                return sugarGram?.toString() ?: ""
+            }
         }
 
     override var butterGram: Short? = null
+        set(value) {
+            field = value
+            butterGramBindingVariable.notifyChange()
+        }
     var butterGramBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
                 butterGram = value?.toShortOrNull()
             }
+
+            override fun get(): String? {
+                return butterGram?.toString() ?: ""
+            }
         }
 
     // Gram corrections
     override var flourGramCorrection: Short? = null
+        set(value) {
+            field = value
+            flourGramCorrectionBindingVariable.notifyChange()
+        }
     var flourGramCorrectionBindingVariable =
         object : ObservableField<String>("") {
             override fun set(value: String?) {
                 super.set(value)
                 flourGramCorrection = value?.toShortOrNull() ?: flourGramCorrection
+            }
+
+            override fun get(): String? {
+                return flourGramCorrection?.toString() ?: ""
             }
         }
 
