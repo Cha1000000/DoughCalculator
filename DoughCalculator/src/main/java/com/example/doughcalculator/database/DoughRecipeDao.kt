@@ -1,7 +1,9 @@
 package com.example.doughcalculator.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DoughRecipeDao {
@@ -21,7 +23,7 @@ interface DoughRecipeDao {
     fun getById(id: Long): DoughRecipeEntity
 
     @Query("SELECT * FROM dough_recipes_table ORDER BY is_favorite")
-    fun getAllRecipes(): LiveData<List<DoughRecipeEntity>>
+    fun getAllRecipes(): List<DoughRecipeEntity>?
 
     @Delete
     fun delete(recipe: DoughRecipeEntity)

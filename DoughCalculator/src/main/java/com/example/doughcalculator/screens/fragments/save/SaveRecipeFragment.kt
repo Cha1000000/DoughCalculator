@@ -21,6 +21,12 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener
     private lateinit var binding: FragmentSaveRecipeBinding
     private val ratioModel: BaseRatioModel by inject()
 
+    @InjectPresenter
+    internal lateinit var presenter: SaveRecipePresenter
+
+    @ProvidePresenter
+    fun providePresenter() = SaveRecipePresenter()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,12 +66,6 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener
         @JvmStatic
         fun getInstance() = SaveRecipeFragment()
     }
-
-    @InjectPresenter
-    internal lateinit var presenter: SaveRecipePresenter
-
-    @ProvidePresenter
-    fun providePresenter() = SaveRecipePresenter()
 
     override fun saveRecipe() {
         closeFragment()

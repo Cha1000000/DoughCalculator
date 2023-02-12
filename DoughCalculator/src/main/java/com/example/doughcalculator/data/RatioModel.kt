@@ -44,7 +44,7 @@ class RatioModel : ViewModel(), BaseRatioModel {
 
     override var recipeId: Long = 0L
 
-    override var recipeTitle: String = ""
+    override var title: String = ""
     override var description: String = ""
     override var isFavorite: Boolean = false
 

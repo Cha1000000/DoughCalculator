@@ -10,7 +10,7 @@ fun mapToDb(ratioModels: List<BaseRatioModel>) = ratioModels.map {
     with(it) {
         DoughRecipeEntity(
             recipeId,
-            recipeTitle,
+            title,
             description,
             isFavorite,
             flourGram ?: 0,
@@ -34,7 +34,7 @@ fun mapToDb(ratioModels: List<BaseRatioModel>) = ratioModels.map {
 fun mapToEntity(ratioModel: BaseRatioModel) = with(ratioModel) {
     DoughRecipeEntity(
         recipeId,
-        recipeTitle,
+        title,
         description,
         isFavorite,
         flourGram ?: 0,
@@ -58,10 +58,10 @@ fun mapToModels(entities: List<DoughRecipeEntity>) = entities.map {
     with(it) { RecipeTitleModel(recipeId, title, description, isFavorite) }
 }
 
-fun RatioModel.mapFromEntity(entity: DoughRecipeEntity) =
+fun BaseRatioModel.mapFromEntity(entity: DoughRecipeEntity) =
     this.apply {
         recipeId = entity.recipeId
-        recipeTitle = entity.title
+        title = entity.title
         description = entity.description
         isFavorite = entity.isFavorite
         flourGram = entity.flourGram

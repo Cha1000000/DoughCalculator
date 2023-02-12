@@ -60,8 +60,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.mi_save -> presenter.onShowSaveDialog()
             R.id.mi_open -> presenter.onShowOpenDialog()
+            R.id.mi_save -> presenter.onShowSaveDialog()
         }
         return true
     }
