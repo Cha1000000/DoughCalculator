@@ -23,6 +23,21 @@
         android:background="@drawable/background_main"
         tools:context=".screens.main.MainActivity">
 
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/ingredient_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@={ratio.title}"
+            tools:ignore="TextContrastCheck"
+            tools:text="Название рецепа"
+            tools:visibility="visible" />
+
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
@@ -31,7 +46,7 @@
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
             <TableLayout
                 android:id="@+id/tableLayout"
@@ -275,7 +290,17 @@
 
                 </TableRow>
 
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="@={ratio.description}"
+                    tools:text="Текст описания рецепта"
+                    tools:visibility="visible"
+                    style="@style/text_description" />
             </TableLayout>
+
         </ScrollView>
 
 

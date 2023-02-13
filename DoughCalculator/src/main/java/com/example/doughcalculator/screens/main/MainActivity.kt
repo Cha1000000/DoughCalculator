@@ -7,8 +7,12 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.OnAttachStateChangeListener
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.StringRes
+import androidx.core.view.doOnDetach
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.doughcalculator.R
@@ -44,6 +48,14 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         binding.lifecycleOwner = this
         binding.ratio = ratioModel as RatioModel?
         binding.btCalculate.setOnClickListener { presenter.onCalculate() }
+        binding.tvTitle.addTextChangedListener {
+            binding.tvTitle.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
+        }
+        binding.tvDescription.addTextChangedListener {
+            binding.tvDescription.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
+        }
+        tvTitle = binding.tvTitle
+        tvDescription = binding.tvDescription
         backButtonPressedListener()
         setContentView(binding.root)
     }
@@ -156,6 +168,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         const val FIRE_BUTTON_KEY_CODE = 293
         const val SHORT_ZERO = 0.toShort()
         lateinit var appContext: Context
+
+        @SuppressLint("StaticFieldLeak")
+        lateinit var tvTitle: TextView
+        @SuppressLint("StaticFieldLeak")
+        lateinit var tvDescription: TextView
     }
 
 }

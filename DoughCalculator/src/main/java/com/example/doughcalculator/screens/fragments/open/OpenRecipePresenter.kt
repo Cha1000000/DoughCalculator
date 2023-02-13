@@ -10,6 +10,7 @@ import com.example.doughcalculator.database.DoughRecipeDao
 import com.example.doughcalculator.database.DoughRecipeEntity
 import com.example.doughcalculator.database.mapFromEntity
 import com.example.doughcalculator.database.mapToModels
+import com.example.doughcalculator.screens.main.MainActivity
 import moxy.InjectViewState
 import org.koin.android.ext.android.inject
 import org.koin.core.component.inject
@@ -46,6 +47,8 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
     fun onRecipeSelect(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
             withIO { getRecipeById(recipe.recipeId) }
+            MainActivity.tvTitle.text = ratioModel.title
+            MainActivity.tvDescription.text = ratioModel.description
             viewState.openRecipe()
         }
     }
