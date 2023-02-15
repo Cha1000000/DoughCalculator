@@ -31,7 +31,7 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_save_recipe,
@@ -39,22 +39,15 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener
             false
         )
         binding.lifecycleOwner = this
-
-        binding.ratio = ratioModel as RatioModel?
-
         initFragment()
-
         return binding.root
     }
 
-    private fun initFragment() {
-        binding.textTitle.addTextChangedListener {
-            binding.btSave.isEnabled = it?.isNotEmpty() ?: false
-        }
-        binding.btSave.isEnabled = false
-        binding.btSave.setOnClickListener {
-            presenter.onRecipeSave()
-        }
+    private fun initFragment() = with(binding) {
+        ratio = ratioModel as RatioModel?
+        textTitle.addTextChangedListener { btSave.isEnabled = it?.isNotEmpty() ?: false }
+        btSave.isEnabled = false
+        btSave.setOnClickListener { presenter.onRecipeSave() }
     }
 
     override fun onBackPressed(): Boolean {

@@ -7,11 +7,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.OnAttachStateChangeListener
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.StringRes
-import androidx.core.view.doOnDetach
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -46,18 +44,22 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         mainActionBar = supportActionBar
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
-        binding.ratio = ratioModel as RatioModel?
-        binding.btCalculate.setOnClickListener { presenter.onCalculate() }
-        binding.tvTitle.addTextChangedListener {
-            binding.tvTitle.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
-        }
-        binding.tvDescription.addTextChangedListener {
-            binding.tvDescription.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
-        }
-        tvTitle = binding.tvTitle
-        tvDescription = binding.tvDescription
+        initFragment()
         backButtonPressedListener()
         setContentView(binding.root)
+    }
+
+    private fun initFragment() = with(binding) {
+        ratio = ratioModel as RatioModel?
+        btCalculate.setOnClickListener { presenter.onCalculate() }
+        tvTitle.addTextChangedListener {
+            tvTitle.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
+        }
+        tvDescription.addTextChangedListener {
+            tvDescription.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
+        }
+        Title = tvTitle
+        Description = tvDescription
     }
 
     override fun onResume() {
@@ -79,7 +81,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     private fun backButtonPressedListener() {
-        onBackPressedDispatcher.addCallback(this ) {
+        onBackPressedDispatcher.addCallback(this) {
             val isNotHandled = forwardEventToFragments().not()
             if (isNotHandled) {
                 val isEndOfBackStack = supportFragmentManager.backStackEntryCount == 0
@@ -132,35 +134,35 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun validate() {
         // assert ratioModel.waterPercent is not null
         if (ratioModel.waterPercent.get()!! in 59.5..80.0) {
-            binding.tvWaterValidation.visibility = View.GONE
-            binding.etWaterGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
-            binding.tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-            binding.tvWaterGramsCorrection.setTextColor(
-                applicationContext!!.getColorResCompat(
-                    android.R.attr.textColorSecondary
-                )
-            )
+            with(binding) {
+                tvWaterValidation.visibility = View.GONE
+                etWaterGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
+                tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+                tvWaterGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+            }
         } else {
-            binding.tvWaterValidation.visibility = View.VISIBLE
-            binding.etWaterGrams.setTextColor(getColor(R.color.text_red))
-            binding.tvWaterPercent.setTextColor(getColor(R.color.text_red))
-            binding.tvWaterGramsCorrection.setTextColor(getColor(R.color.text_red))
+            with(binding) {
+                tvWaterValidation.visibility = View.VISIBLE
+                etWaterGrams.setTextColor(getColor(R.color.text_red))
+                tvWaterPercent.setTextColor(getColor(R.color.text_red))
+                tvWaterGramsCorrection.setTextColor(getColor(R.color.text_red))
+            }
         }
         // assert ratioModel.saltPercent is not null
         if (ratioModel.saltPercent.get()!! > 2.5) {
-            binding.tvSaltValidation.visibility = View.VISIBLE
-            binding.etSaltGrams.setTextColor(getColor(R.color.text_red))
-            binding.tvSaltPercent.setTextColor(getColor(R.color.text_red))
-            binding.tvSaltGramsCorrection.setTextColor(getColor(R.color.text_red))
+            with(binding) {
+                tvSaltValidation.visibility = View.VISIBLE
+                etSaltGrams.setTextColor(getColor(R.color.text_red))
+                tvSaltPercent.setTextColor(getColor(R.color.text_red))
+                tvSaltGramsCorrection.setTextColor(getColor(R.color.text_red))
+            }
         } else {
-            binding.tvSaltValidation.visibility = View.GONE
-            binding.etSaltGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
-            binding.tvSaltPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-            binding.tvSaltGramsCorrection.setTextColor(
-                applicationContext!!.getColorResCompat(
-                    android.R.attr.textColorSecondary
-                )
-            )
+            with(binding) {
+                tvSaltValidation.visibility = View.GONE
+                etSaltGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
+                tvSaltPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+                tvSaltGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+            }
         }
     }
 
@@ -170,9 +172,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         lateinit var appContext: Context
 
         @SuppressLint("StaticFieldLeak")
-        lateinit var tvTitle: TextView
+        lateinit var Title: TextView
+
         @SuppressLint("StaticFieldLeak")
-        lateinit var tvDescription: TextView
+        lateinit var Description: TextView
     }
 
 }

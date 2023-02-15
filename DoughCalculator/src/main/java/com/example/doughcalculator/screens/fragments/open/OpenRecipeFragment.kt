@@ -30,7 +30,7 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_recipes_list,
@@ -44,13 +44,10 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
     private fun initList(recipes: List<BaseRecipeModel>) {
         binding.apply {
             rcView.setHasFixedSize(true)
-            rcView.layoutManager =
-                LinearLayoutManager(context) // GridLayoutManager(context, COLUMN_COUNT)
+            rcView.layoutManager = LinearLayoutManager(context) // GridLayoutManager(context, COLUMN_COUNT)
             recipeAdapter = RecipeAdapter(recipes as ArrayList<BaseRecipeModel>)
                 .also {adapter ->
-                    adapter.onItemClick = { recipe ->
-                        presenter.onRecipeSelect(recipe)
-                    }
+                    adapter.onItemClick = { recipe -> presenter.onRecipeSelect(recipe) }
                 }
             rcView.adapter = recipeAdapter
         }
@@ -73,7 +70,7 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
         @JvmStatic
         fun getInstance() = OpenRecipeFragment()
 
-        const val COLUMN_COUNT = 1
+        //const val COLUMN_COUNT = 1
     }
 
 }

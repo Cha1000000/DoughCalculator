@@ -12,7 +12,6 @@ import com.example.doughcalculator.database.mapFromEntity
 import com.example.doughcalculator.database.mapToModels
 import com.example.doughcalculator.screens.main.MainActivity
 import moxy.InjectViewState
-import org.koin.android.ext.android.inject
 import org.koin.core.component.inject
 
 @InjectViewState
@@ -26,7 +25,7 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         launchUI(createAlertErrorHandler()) {
-            recipeSource.value = withIO { getAll() }
+            recipeSource.value = withIO { dataSource.getAllRecipes() }
             recipeSource.value.let { source ->
                 if (source != null) {
                     myRecipes.value = mapToModels(source)
@@ -36,10 +35,7 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
         }
     }
 
-    private suspend fun getAll() =
-        dataSource.getAllRecipes()
-
-    private suspend fun getRecipeById(id: Long) {
+    private fun getRecipeById(id: Long) {
         val recipeData = dataSource.getById(id)
         ratioModel.mapFromEntity(recipeData)
     }
@@ -47,8 +43,8 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
     fun onRecipeSelect(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
             withIO { getRecipeById(recipe.recipeId) }
-            MainActivity.tvTitle.text = ratioModel.title
-            MainActivity.tvDescription.text = ratioModel.description
+            MainActivity.Title.text = ratioModel.title
+            MainActivity.Description.text = ratioModel.description
             viewState.openRecipe()
         }
     }
