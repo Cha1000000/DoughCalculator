@@ -28,6 +28,9 @@ interface DoughRecipeDao {
     @Delete
     fun delete(recipe: DoughRecipeEntity)
 
+    @Query("DELETE FROM dough_recipes_table WHERE recipeId = :id")
+    fun deleteById(id: Long)
+
     //@Delete
     //fun deleteRecipes(recipes: List<DoughRecipe>): Int
 

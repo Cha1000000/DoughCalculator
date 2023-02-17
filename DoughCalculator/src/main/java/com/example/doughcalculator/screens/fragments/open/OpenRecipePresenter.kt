@@ -48,4 +48,10 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
             viewState.openRecipe()
         }
     }
+
+    fun onRemoveRecipe(id: Long) {
+        launchUI(createAlertErrorHandler()) {
+            withIO { dataSource.deleteById(id) }
+        }
+    }
 }

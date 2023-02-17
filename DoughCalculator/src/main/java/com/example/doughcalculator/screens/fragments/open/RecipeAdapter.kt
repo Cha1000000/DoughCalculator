@@ -16,6 +16,7 @@ class RecipeAdapter(
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
 
     var onItemClick : ((BaseRecipeModel) -> Unit)? = null
+    var onRemoveItemClick : ((Long) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder = RecipeHolder(
         FragmentRecipeItemBinding.inflate(
@@ -43,9 +44,11 @@ class RecipeAdapter(
 
         private var itemTitle: TextView = binding.tvRecipeTitle
         private val starButton: ImageButton = binding.btStar
+        private val deleteButton: ImageButton = binding.btDelete
 
         fun bind(recipe: BaseRecipeModel) {
             itemTitle.text = recipe.title
+            deleteButton.setOnClickListener { onRemoveItemClick?.invoke(recipe.recipeId) }
         }
 
         override fun toString(): String {

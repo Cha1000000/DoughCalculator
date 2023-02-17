@@ -48,6 +48,7 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
             recipeAdapter = RecipeAdapter(recipes as ArrayList<BaseRecipeModel>)
                 .also {adapter ->
                     adapter.onItemClick = { recipe -> presenter.onRecipeSelect(recipe) }
+                    adapter.onRemoveItemClick = { id -> presenter.onRemoveRecipe(id)}
                 }
             rcView.adapter = recipeAdapter
         }
