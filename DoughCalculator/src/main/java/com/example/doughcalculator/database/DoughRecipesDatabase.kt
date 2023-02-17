@@ -24,6 +24,7 @@ abstract class DoughRecipesDatabase : RoomDatabase() {
                         DoughRecipesDatabase::class.java,
                         "dough_recipes.db"
                     )
+                        .allowMainThreadQueries()
                         .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance

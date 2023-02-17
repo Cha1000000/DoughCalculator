@@ -22,8 +22,6 @@ class SaveRecipePresenter : BasePresenter<SaveRecipeView>() {
             launchUI(createAlertErrorHandler()) {
                 withIO { dataSource.update(entity) }
             }
-            MainActivity.Title.text = ratioModel.title
-            MainActivity.Description.text = ratioModel.description
         } else {
             launchUI(createAlertErrorHandler()) {
                 withIO {
@@ -32,6 +30,8 @@ class SaveRecipePresenter : BasePresenter<SaveRecipeView>() {
                 }
             }
         }
+        MainActivity.Title.text = ratioModel.title
+        MainActivity.Description.text = ratioModel.description
         viewState.saveRecipe()
     }
 

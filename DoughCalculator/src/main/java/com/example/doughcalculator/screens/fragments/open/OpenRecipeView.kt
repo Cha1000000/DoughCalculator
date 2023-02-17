@@ -12,4 +12,7 @@ interface OpenRecipeView : BaseView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun openRecipe()
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun removeRecipe(item: BaseRecipeModel)
 }

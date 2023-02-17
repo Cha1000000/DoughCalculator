@@ -1,5 +1,6 @@
 package com.example.doughcalculator.screens.fragments.open
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -16,7 +17,7 @@ class RecipeAdapter(
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
 
     var onItemClick : ((BaseRecipeModel) -> Unit)? = null
-    var onRemoveItemClick : ((Long) -> Unit)? = null
+    var onRemoveItemClick : ((BaseRecipeModel) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder = RecipeHolder(
         FragmentRecipeItemBinding.inflate(
@@ -34,9 +35,16 @@ class RecipeAdapter(
 
     override fun getItemCount(): Int = recipeList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addItem(item: BaseRecipeModel) {
         recipeList.add(item)
         notifyDataSetChanged()
+    }
+
+    fun deleteItem(item: BaseRecipeModel) {
+        val index = recipeList.indexOf(item)
+        recipeList.remove(item)
+        notifyItemRemoved(index)
     }
 
     inner class RecipeHolder(binding: FragmentRecipeItemBinding) :
@@ -48,7 +56,7 @@ class RecipeAdapter(
 
         fun bind(recipe: BaseRecipeModel) {
             itemTitle.text = recipe.title
-            deleteButton.setOnClickListener { onRemoveItemClick?.invoke(recipe.recipeId) }
+            deleteButton.setOnClickListener { onRemoveItemClick?.invoke(recipe) }
         }
 
         override fun toString(): String {

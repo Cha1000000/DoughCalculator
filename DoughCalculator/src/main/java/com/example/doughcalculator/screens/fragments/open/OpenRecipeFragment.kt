@@ -48,7 +48,7 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
             recipeAdapter = RecipeAdapter(recipes as ArrayList<BaseRecipeModel>)
                 .also {adapter ->
                     adapter.onItemClick = { recipe -> presenter.onRecipeSelect(recipe) }
-                    adapter.onRemoveItemClick = { id -> presenter.onRemoveRecipe(id)}
+                    adapter.onRemoveItemClick = { recipe -> presenter.onRemoveRecipe(recipe)}
                 }
             rcView.adapter = recipeAdapter
         }
@@ -56,6 +56,10 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
 
     override fun loadRecipeList(items: List<BaseRecipeModel>) {
         initList(items)
+    }
+
+    override fun removeRecipe(item: BaseRecipeModel) {
+        recipeAdapter.deleteItem(item)
     }
 
     override fun openRecipe() {

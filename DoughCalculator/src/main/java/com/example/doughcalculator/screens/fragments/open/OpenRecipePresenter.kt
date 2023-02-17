@@ -24,6 +24,10 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        refreshRecipes()
+    }
+
+    private fun refreshRecipes() {
         launchUI(createAlertErrorHandler()) {
             recipeSource.value = withIO { dataSource.getAllRecipes() }
             recipeSource.value.let { source ->
@@ -49,9 +53,10 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
         }
     }
 
-    fun onRemoveRecipe(id: Long) {
+    fun onRemoveRecipe(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
-            withIO { dataSource.deleteById(id) }
+            withIO { dataSource.deleteById(recipe.recipeId) }
+            viewState.removeRecipe(recipe)
         }
     }
 }
