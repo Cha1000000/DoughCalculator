@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Калькулятор теста</string>
+
+    <string name="screen_title_save_recipe">Сохранение рецепта</string>
+    <string name="screen_title_open_recipe">Выбор рецепта</string>
+
     <string name="water">Вода</string>
     <string name="flour">Мука</string>
     <string name="salt">Соль</string>

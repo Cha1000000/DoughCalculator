@@ -45,9 +45,9 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener
 
     private fun initFragment() = with(binding) {
         ratio = ratioModel as RatioModel?
-        textTitle.addTextChangedListener { btSave.isEnabled = it?.isNotEmpty() ?: false }
         btSave.isEnabled = false
         btSave.setOnClickListener { presenter.onRecipeSave() }
+        textTitle.addTextChangedListener { btSave.isEnabled = it?.isNotEmpty() ?: false }
     }
 
     override fun onBackPressed(): Boolean {

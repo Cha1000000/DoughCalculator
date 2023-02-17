@@ -12,6 +12,7 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseView {
     }
 
     protected fun closeFragment() {
+        parentFragmentManager.popBackStack()
         parentFragmentManager
             .beginTransaction()
             .remove(this)
