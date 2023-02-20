@@ -11,6 +11,7 @@ import com.example.doughcalculator.common.callback.OnBackPressedListener
 import com.example.doughcalculator.common.mvp.BaseFragment
 import com.example.doughcalculator.data.BaseRecipeModel
 import com.example.doughcalculator.databinding.FragmentRecipesListBinding
+import com.example.doughcalculator.common.extensions.showAlertDialog
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import org.koin.core.component.KoinComponent
@@ -51,7 +52,7 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
                 .also { adapter ->
                     with(adapter) {
                         onItemClick = { recipe -> presenter.onRecipeSelect(recipe) }
-                        onRemoveItemClick = { recipe -> presenter.onRemoveRecipe(recipe) }
+                        onDeleteItemClick = { recipe -> presenter.onDeleteRecipeClick(recipe) }
                         onItemSetFavoriteClick = { recipe -> presenter.onRecipeSetFavorite(recipe) }
                     }
                 }
@@ -64,12 +65,20 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
         initList(items)
     }
 
-    override fun removeRecipe(item: BaseRecipeModel) {
-        recipeAdapter.deleteItem(item)
-    }
-
     override fun openRecipe() {
         closeFragment()
+    }
+
+    override fun showRemoveRecipeConfirmDialog(recipe: BaseRecipeModel) {
+        context?.showAlertDialog(
+            titleRes = R.string.delete_confirm_title,
+            msg = getString(R.string.recipe_delete_confirm_message, recipe.title),
+            okCallback = { presenter.onDeleteConfirmClick(recipe) }
+        )
+    }
+
+    override fun removeRecipe(item: BaseRecipeModel) {
+        recipeAdapter.deleteItem(item)
     }
 
     override fun onBackPressed(): Boolean {

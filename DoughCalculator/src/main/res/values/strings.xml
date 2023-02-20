@@ -35,6 +35,8 @@
     <string name="error_invalid_butter_percent">Не расчитан % масла</string>
     <string name="error_alert_salt_invalid_range">допустимая норма превышена (не более 2,5%)</string>
     <string name="alert_water_valid_range">допустимый диапазон: 60–80%</string>
+    <string name="delete_confirm_title">Удаление рецепта</string>
+    <string name="recipe_delete_confirm_message">Вы уверены, что хотите удалить рецепт \"%1$s\"? Отменить действие будет невозможно.</string>
 
     <string name="menu_item_save">Сохранить рецепт</string>
     <string name="menu_item_open">Открыть рецепт</string>

@@ -16,7 +16,7 @@ class RecipeAdapter(
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
 
     var onItemClick: ((BaseRecipeModel) -> Unit)? = null
-    var onRemoveItemClick: ((BaseRecipeModel) -> Unit)? = null
+    var onDeleteItemClick: ((BaseRecipeModel) -> Unit)? = null
     var onItemSetFavoriteClick: ((BaseRecipeModel) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder = RecipeHolder(
@@ -56,7 +56,7 @@ class RecipeAdapter(
 
         fun bind(recipe: BaseRecipeModel) {
             itemTitle.text = recipe.title
-            deleteButton.setOnClickListener { onRemoveItemClick?.invoke(recipe) }
+            deleteButton.setOnClickListener { onDeleteItemClick?.invoke(recipe) }
             starButton.setOnClickListener { onItemSetFavoriteClick?.invoke(recipe) }
             starButton.setImageResource(
                 if (recipe.isFavorite)

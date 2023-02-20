@@ -59,7 +59,11 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
         }
     }
 
-    fun onRemoveRecipe(recipe: BaseRecipeModel) {
+    fun onDeleteRecipeClick(recipe: BaseRecipeModel) {
+        viewState.showRemoveRecipeConfirmDialog(recipe)
+    }
+
+    fun onDeleteConfirmClick(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
             withIO { dataSource.deleteById(recipe.recipeId) }
             //viewState.removeRecipe(recipe)
