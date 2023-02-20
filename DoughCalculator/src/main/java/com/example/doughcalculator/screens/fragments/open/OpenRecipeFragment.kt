@@ -44,12 +44,18 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
     private fun initList(recipes: List<BaseRecipeModel>) {
         binding.apply {
             rcView.setHasFixedSize(true)
-            rcView.layoutManager = LinearLayoutManager(context) // GridLayoutManager(context, COLUMN_COUNT)
+            rcView.layoutManager =
+                LinearLayoutManager(context) // GridLayoutManager(context, COLUMN_COUNT)
+
             recipeAdapter = RecipeAdapter(recipes as ArrayList<BaseRecipeModel>)
-                .also {adapter ->
-                    adapter.onItemClick = { recipe -> presenter.onRecipeSelect(recipe) }
-                    adapter.onRemoveItemClick = { recipe -> presenter.onRemoveRecipe(recipe)}
+                .also { adapter ->
+                    with(adapter) {
+                        onItemClick = { recipe -> presenter.onRecipeSelect(recipe) }
+                        onRemoveItemClick = { recipe -> presenter.onRemoveRecipe(recipe) }
+                        onItemSetFavoriteClick = { recipe -> presenter.onRecipeSetFavorite(recipe) }
+                    }
                 }
+
             rcView.adapter = recipeAdapter
         }
     }

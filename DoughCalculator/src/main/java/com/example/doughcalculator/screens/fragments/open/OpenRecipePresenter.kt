@@ -1,13 +1,14 @@
 package com.example.doughcalculator.screens.fragments.open
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import com.example.doughcalculator.common.extensions.launchUI
 import com.example.doughcalculator.common.extensions.withIO
 import com.example.doughcalculator.common.mvp.BasePresenter
 import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.BaseRecipeModel
 import com.example.doughcalculator.database.DoughRecipeDao
-import com.example.doughcalculator.database.DoughRecipeEntity
+//import com.example.doughcalculator.database.DoughRecipeEntity
 import com.example.doughcalculator.database.mapFromEntity
 import com.example.doughcalculator.database.mapToModels
 import com.example.doughcalculator.screens.main.MainActivity
@@ -19,15 +20,20 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
 
     private val ratioModel: BaseRatioModel by inject()
     private val dataSource: DoughRecipeDao by inject()
-    private var recipeSource = MutableLiveData<List<DoughRecipeEntity>?>()
+    //private var recipeSource = MutableLiveData<List<DoughRecipeEntity>?>()
     private var myRecipes = MutableLiveData<List<BaseRecipeModel>?>()
+    private val recipes = dataSource.getAllRecipesLive().asLiveData()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        refreshRecipes()
+        //loadRecipes()
+        recipes.observeForever { allRecipes ->
+            myRecipes.value = mapToModels(allRecipes)
+            viewState.loadRecipeList(myRecipes.value!!)
+        }
     }
 
-    private fun refreshRecipes() {
+    /*private fun loadRecipes() {
         launchUI(createAlertErrorHandler()) {
             recipeSource.value = withIO { dataSource.getAllRecipes() }
             recipeSource.value.let { source ->
@@ -37,7 +43,7 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
                 }
             }
         }
-    }
+    }*/
 
     private fun getRecipeById(id: Long) {
         val recipeData = dataSource.getById(id)
@@ -56,7 +62,18 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
     fun onRemoveRecipe(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
             withIO { dataSource.deleteById(recipe.recipeId) }
-            viewState.removeRecipe(recipe)
+            //viewState.removeRecipe(recipe)
+        }
+    }
+
+    fun onRecipeSetFavorite(recipe: BaseRecipeModel) {
+        recipe.isFavorite = !recipe.isFavorite
+        launchUI(createAlertErrorHandler()) {
+            withIO {
+                val entity = dataSource.getById(recipe.recipeId)
+                entity.isFavorite = recipe.isFavorite
+                dataSource.update(entity)
+            }
         }
     }
 }

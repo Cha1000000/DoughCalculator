@@ -1,6 +1,5 @@
 package com.example.doughcalculator.screens.fragments.open
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -16,8 +15,9 @@ class RecipeAdapter(
     private val recipeList: ArrayList<BaseRecipeModel>
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
 
-    var onItemClick : ((BaseRecipeModel) -> Unit)? = null
-    var onRemoveItemClick : ((BaseRecipeModel) -> Unit)? = null
+    var onItemClick: ((BaseRecipeModel) -> Unit)? = null
+    var onRemoveItemClick: ((BaseRecipeModel) -> Unit)? = null
+    var onItemSetFavoriteClick: ((BaseRecipeModel) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder = RecipeHolder(
         FragmentRecipeItemBinding.inflate(
@@ -35,11 +35,11 @@ class RecipeAdapter(
 
     override fun getItemCount(): Int = recipeList.size
 
-    @SuppressLint("NotifyDataSetChanged")
+    /*@SuppressLint("NotifyDataSetChanged")
     fun addItem(item: BaseRecipeModel) {
         recipeList.add(item)
         notifyDataSetChanged()
-    }
+    }*/
 
     fun deleteItem(item: BaseRecipeModel) {
         val index = recipeList.indexOf(item)
@@ -57,6 +57,13 @@ class RecipeAdapter(
         fun bind(recipe: BaseRecipeModel) {
             itemTitle.text = recipe.title
             deleteButton.setOnClickListener { onRemoveItemClick?.invoke(recipe) }
+            starButton.setOnClickListener { onItemSetFavoriteClick?.invoke(recipe) }
+            starButton.setImageResource(
+                if (recipe.isFavorite)
+                    android.R.drawable.btn_star_big_on
+                else
+                    android.R.drawable.btn_star_big_off
+            )
         }
 
         override fun toString(): String {
