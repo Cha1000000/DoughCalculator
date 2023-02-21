@@ -11,9 +11,8 @@ import moxy.InjectViewState
 import org.koin.core.component.inject
 
 @InjectViewState
-class SaveRecipePresenter : BasePresenter<SaveRecipeView>() {
+class SaveRecipePresenter(private val ratioModel: BaseRatioModel) : BasePresenter<SaveRecipeView>() {
 
-    private val ratioModel: BaseRatioModel by inject()
     private val dataSource: DoughRecipeDao by inject()
 
     fun onRecipeSave() {

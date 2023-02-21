@@ -21,4 +21,8 @@ interface MainView: MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showOpenRecipeDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun resetView()
+
 }

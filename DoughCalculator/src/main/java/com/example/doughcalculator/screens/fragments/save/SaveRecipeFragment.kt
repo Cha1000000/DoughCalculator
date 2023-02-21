@@ -14,18 +14,17 @@ import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.databinding.FragmentSaveRecipeBinding
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import org.koin.android.ext.android.inject
 
 class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener {
 
     private lateinit var binding: FragmentSaveRecipeBinding
-    private val ratioModel: BaseRatioModel by inject()
+    private lateinit var ratioModel: BaseRatioModel
 
     @InjectPresenter
     internal lateinit var presenter: SaveRecipePresenter
 
     @ProvidePresenter
-    fun providePresenter() = SaveRecipePresenter()
+    fun providePresenter() = SaveRecipePresenter(ratioModel)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +56,8 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener
 
     companion object {
         @JvmStatic
-        fun getInstance() = SaveRecipeFragment()
+        fun getInstance(model: BaseRatioModel) =
+            SaveRecipeFragment().apply { this.ratioModel = model }
     }
 
     override fun saveRecipe() {

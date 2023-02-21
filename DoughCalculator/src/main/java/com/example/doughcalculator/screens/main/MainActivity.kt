@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.StringRes
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -24,17 +25,23 @@ import com.example.doughcalculator.databinding.ActivityMainBinding
 import com.example.doughcalculator.screens.fragments.open.OpenRecipeFragment
 import com.example.doughcalculator.screens.fragments.save.SaveRecipeFragment
 import moxy.presenter.InjectPresenter
-import org.koin.android.ext.android.inject
+import moxy.presenter.ProvidePresenter
+import org.koin.android.ext.android.get
+
 
 class MainActivity : BaseActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
 
     //private val ratioModel by lazy { ViewModelProvider(this)[RatioModel::class.java] }
-    private val ratioModel: BaseRatioModel by inject()
+    //private val ratioModel: BaseRatioModel by inject()
+    private var ratioModel: BaseRatioModel = get()
 
     @InjectPresenter
     internal lateinit var presenter: MainPresenter
+
+    @ProvidePresenter
+    fun providePresenter() = MainPresenter(ratioModel)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +49,13 @@ class MainActivity : BaseActivity(), MainView {
         mainActionBar = supportActionBar
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
-        initFragment()
+        initView()
         backButtonPressedListener()
         backStackChangedListener()
         setContentView(binding.root)
     }
 
-    private fun initFragment() = with(binding) {
+    private fun initView() = with(binding) {
         ratio = ratioModel as RatioModel?
         btCalculate.setOnClickListener { presenter.onCalculate() }
         tvTitle.addTextChangedListener {
@@ -66,7 +73,9 @@ class MainActivity : BaseActivity(), MainView {
         window.decorView.clearFocus()
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (menu is MenuBuilder) menu.setOptionalIconsVisible(true)
         menuInflater.inflate(R.menu.main_menu, menu)
         toolbarMenu = menu!!
         return true
@@ -75,6 +84,9 @@ class MainActivity : BaseActivity(), MainView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> forwardEventToFragments()
+            R.id.mi_new -> {
+                presenter.onCreateNewRecipe()
+            }
             R.id.mi_open -> {
                 initFragmentToolbar(R.string.screen_title_open_recipe)
                 presenter.onShowOpenDialog()
@@ -116,11 +128,19 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun showSaveRecipeDialog() {
-        showFragment(SaveRecipeFragment.getInstance())
+        showFragment(SaveRecipeFragment.getInstance(ratioModel))
     }
 
     override fun showOpenRecipeDialog() {
-        showFragment(OpenRecipeFragment.getInstance())
+        showFragment(OpenRecipeFragment.getInstance(ratioModel))
+    }
+
+    override fun resetView() = with(binding) {
+        ratioModel = RatioModel()
+        presenter.apply { this.ratio = ratioModel }
+        ratio = ratioModel as RatioModel?
+        Title = tvTitle
+        Description = tvDescription
     }
 
     private fun showFragment(f: Fragment) {

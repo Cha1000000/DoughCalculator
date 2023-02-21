@@ -12,6 +12,7 @@ import com.example.doughcalculator.common.mvp.BaseFragment
 import com.example.doughcalculator.data.BaseRecipeModel
 import com.example.doughcalculator.databinding.FragmentRecipesListBinding
 import com.example.doughcalculator.common.extensions.showAlertDialog
+import com.example.doughcalculator.data.BaseRatioModel
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import org.koin.core.component.KoinComponent
@@ -20,12 +21,13 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
 
     private lateinit var binding: FragmentRecipesListBinding
     private lateinit var recipeAdapter: RecipeAdapter
+    private lateinit var ratioModel: BaseRatioModel
 
     @InjectPresenter
     internal lateinit var presenter: OpenRecipePresenter
 
     @ProvidePresenter
-    fun providePresenter() = OpenRecipePresenter()
+    fun providePresenter() = OpenRecipePresenter(ratioModel)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,7 +90,8 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
 
     companion object {
         @JvmStatic
-        fun getInstance() = OpenRecipeFragment()
+        fun getInstance(model: BaseRatioModel) =
+            OpenRecipeFragment().apply { this.ratioModel = model }
 
         //const val COLUMN_COUNT = 1
     }

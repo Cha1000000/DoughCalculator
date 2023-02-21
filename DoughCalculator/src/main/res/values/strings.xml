@@ -38,8 +38,9 @@
     <string name="delete_confirm_title">Удаление рецепта</string>
     <string name="recipe_delete_confirm_message">Вы уверены, что хотите удалить рецепт \"%1$s\"? Отменить действие будет невозможно.</string>
 
-    <string name="menu_item_save">Сохранить рецепт</string>
+    <string name="menu_item_new">Новый рецепт</string>
     <string name="menu_item_open">Открыть рецепт</string>
+    <string name="menu_item_save">Сохранить рецепт</string>
     <string name="unknown_exception_title">Неизвестная ошибка</string>
     <string name="button_is_favorite_description">В избранное</string>
     <string name="button_delete_description">Удалить</string>

@@ -1,5 +1,6 @@
 package com.example.doughcalculator.screens.fragments.open
 
+//import com.example.doughcalculator.database.DoughRecipeEntity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.example.doughcalculator.common.extensions.launchUI
@@ -8,7 +9,6 @@ import com.example.doughcalculator.common.mvp.BasePresenter
 import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.BaseRecipeModel
 import com.example.doughcalculator.database.DoughRecipeDao
-//import com.example.doughcalculator.database.DoughRecipeEntity
 import com.example.doughcalculator.database.mapFromEntity
 import com.example.doughcalculator.database.mapToModels
 import com.example.doughcalculator.screens.main.MainActivity
@@ -16,9 +16,8 @@ import moxy.InjectViewState
 import org.koin.core.component.inject
 
 @InjectViewState
-class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
+class OpenRecipePresenter(private val ratioModel: BaseRatioModel) : BasePresenter<OpenRecipeView>() {
 
-    private val ratioModel: BaseRatioModel by inject()
     private val dataSource: DoughRecipeDao by inject()
     //private var recipeSource = MutableLiveData<List<DoughRecipeEntity>?>()
     private var myRecipes = MutableLiveData<List<BaseRecipeModel>?>()
@@ -45,14 +44,10 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
         }
     }*/
 
-    private fun getRecipeById(id: Long) {
-        val recipeData = dataSource.getById(id)
-        ratioModel.mapFromEntity(recipeData)
-    }
-
     fun onRecipeSelect(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
-            withIO { getRecipeById(recipe.recipeId) }
+            val recipeData = dataSource.getById(recipe.recipeId)
+            ratioModel.mapFromEntity(recipeData)
             MainActivity.Title.text = ratioModel.title
             MainActivity.Description.text = ratioModel.description
             viewState.openRecipe()
