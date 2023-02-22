@@ -1,52 +1,15 @@
 package com.example.doughcalculator.data
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class RatioModel : ViewModel(), BaseRatioModel {
-    /*
-        private val _flourGram: MutableLiveData<Short?> = MutableLiveData(null)
-        private val _waterGram: MutableLiveData<Short?> = MutableLiveData(null)
-        private val _saltGram: MutableLiveData<Short?> = MutableLiveData(null)
-        private val _sugarGram: MutableLiveData<Short?> = MutableLiveData(null)
-        private val _butterGram: MutableLiveData<Short?> = MutableLiveData(null)
-
-        private val _flourGramCorrection: MutableLiveData<Short?> = MutableLiveData(null)
-        private val _waterGramCorrection: MutableLiveData<Short?> = MutableLiveData(null)
-        private val _saltGramCorrection: MutableLiveData<Short?> = MutableLiveData(null)
-        private val _sugarGramCorrection: MutableLiveData<Short?> = MutableLiveData(null)
-        private val _butterGramCorrection: MutableLiveData<Short?> = MutableLiveData(null)
-
-        private val _waterPercent: MutableLiveData<Double?> = MutableLiveData(null)
-        private val _saltPercent: MutableLiveData<Double?> = MutableLiveData(null)
-        private val _sugarPercent: MutableLiveData<Double?> = MutableLiveData(null)
-        private val _butterPercent: MutableLiveData<Double?> = MutableLiveData(null)
-
-        val flourGram: MutableLiveData<Short?> = _flourGram
-        val waterGram: MutableLiveData<Short?> = _waterGram
-        val saltGram: MutableLiveData<Short?> = _saltGram
-        val sugarGram: MutableLiveData<Short?> = _sugarGram
-        val butterGram: MutableLiveData<Short?> = _butterGram
-
-        val flourGramCorrection: MutableLiveData<Short?> = _flourGramCorrection
-        val waterGramCorrection: MutableLiveData<Short?> = _waterGramCorrection
-        val saltGramCorrection: MutableLiveData<Short?> = _saltGramCorrection
-        val sugarGramCorrection: MutableLiveData<Short?> = _sugarGramCorrection
-        val butterGramCorrection: MutableLiveData<Short?> = _butterGramCorrection
-
-        var waterPercent: MutableLiveData<Double?> = _waterPercent
-        val saltPercent: MutableLiveData<Double?> = _saltPercent
-        val sugarPercent: MutableLiveData<Double?> = _sugarPercent
-        val butterPercent: MutableLiveData<Double?> = _butterPercent
-    */
-
     override var recipeId: Long = 0L
 
     override var title: String = ""
     override var description: String = ""
     override var isFavorite: Boolean = false
+    override var hasUnsavedDate: Boolean = false
 
     // Grams
     override var flourGram: Short? = null
@@ -61,7 +24,7 @@ class RatioModel : ViewModel(), BaseRatioModel {
                 flourGram = value?.toShortOrNull()
             }
 
-            override fun get(): String? {
+            override fun get(): String {
                 return flourGram?.toString() ?: ""
             }
         }
@@ -78,7 +41,7 @@ class RatioModel : ViewModel(), BaseRatioModel {
                 waterGram = value?.toShortOrNull()
             }
 
-            override fun get(): String? {
+            override fun get(): String {
                 return waterGram?.toString() ?: ""
             }
         }
@@ -95,7 +58,7 @@ class RatioModel : ViewModel(), BaseRatioModel {
                 saltGram = value?.toShortOrNull()
             }
 
-            override fun get(): String? {
+            override fun get(): String {
                 return saltGram?.toString() ?: ""
             }
         }
@@ -112,7 +75,7 @@ class RatioModel : ViewModel(), BaseRatioModel {
                 sugarGram = value?.toShortOrNull()
             }
 
-            override fun get(): String? {
+            override fun get(): String {
                 return sugarGram?.toString() ?: ""
             }
         }
@@ -129,7 +92,7 @@ class RatioModel : ViewModel(), BaseRatioModel {
                 butterGram = value?.toShortOrNull()
             }
 
-            override fun get(): String? {
+            override fun get(): String {
                 return butterGram?.toString() ?: ""
             }
         }
@@ -147,7 +110,7 @@ class RatioModel : ViewModel(), BaseRatioModel {
                 flourGramCorrection = value?.toShortOrNull() ?: flourGramCorrection
             }
 
-            override fun get(): String? {
+            override fun get(): String {
                 return flourGramCorrection?.toString() ?: ""
             }
         }

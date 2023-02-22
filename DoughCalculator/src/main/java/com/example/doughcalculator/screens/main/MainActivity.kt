@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import com.example.doughcalculator.R
 import com.example.doughcalculator.common.callback.OnBackPressedListener
 import com.example.doughcalculator.common.extensions.getColorResCompat
+import com.example.doughcalculator.common.extensions.showAlertDialog
 import com.example.doughcalculator.common.extensions.showErrorAlertDialog
 import com.example.doughcalculator.common.mvp.BaseActivity
 import com.example.doughcalculator.data.BaseRatioModel
@@ -84,19 +85,19 @@ class MainActivity : BaseActivity(), MainView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> forwardEventToFragments()
-            R.id.mi_new -> {
-                presenter.onCreateNewRecipe()
-            }
-            R.id.mi_open -> {
-                initFragmentToolbar(R.string.screen_title_open_recipe)
-                presenter.onShowOpenDialog()
-            }
-            R.id.mi_save -> {
-                initFragmentToolbar(R.string.screen_title_save_recipe)
-                presenter.onShowSaveDialog()
-            }
+            R.id.mi_new -> presenter.onCreateNewRecipeClick()
+            R.id.mi_open -> presenter.onShowOpenDialog()
+            R.id.mi_save -> presenter.onShowSaveDialog()
         }
         return true
+    }
+
+    override fun showCreateRecipeConfirmDialog() {
+        showAlertDialog(
+            titleRes = R.string.error_alert_title_warning,
+            msgRes = R.string.recipe_create_confirm_message,
+            okCallback = { presenter.createNewRecipe() }
+        )
     }
 
     private fun backButtonPressedListener() {
@@ -128,10 +129,12 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun showSaveRecipeDialog() {
+        initFragmentToolbar(R.string.screen_title_save_recipe)
         showFragment(SaveRecipeFragment.getInstance(ratioModel))
     }
 
     override fun showOpenRecipeDialog() {
+        initFragmentToolbar(R.string.screen_title_open_recipe)
         showFragment(OpenRecipeFragment.getInstance(ratioModel))
     }
 
@@ -151,8 +154,8 @@ class MainActivity : BaseActivity(), MainView {
             .commit()
     }
 
-    override fun showError(@StringRes msgRes: Int) {
-        this.showErrorAlertDialog(msgRes)
+    override fun showError(@StringRes msgRes: Int, @StringRes titleRes: Int) {
+        this.showErrorAlertDialog(msgRes, titleRes)
     }
 
     override fun closeKeyboard() {

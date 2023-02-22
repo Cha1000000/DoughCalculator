@@ -21,5 +21,7 @@ interface BaseRatioModel : BaseRecipeModel {
     var sugarPercent: ObservableField<Double?>
     var butterPercent: ObservableField<Double?>
 
+    var hasUnsavedDate: Boolean
+
     fun isUpdate(): Boolean
 }

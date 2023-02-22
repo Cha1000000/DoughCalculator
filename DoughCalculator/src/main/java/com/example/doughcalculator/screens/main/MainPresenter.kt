@@ -1,18 +1,41 @@
 package com.example.doughcalculator.screens.main
 
+import androidx.lifecycle.asLiveData
 import com.example.doughcalculator.R
 import com.example.doughcalculator.data.BaseRatioModel
+import com.example.doughcalculator.database.DoughRecipeDao
 import com.example.doughcalculator.screens.main.MainActivity.Companion.SHORT_ZERO
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 @InjectViewState
 class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinComponent {
 
+    private val dataSource: DoughRecipeDao by inject()
+    private val recipes = dataSource.getAllRecipesLive().asLiveData()
     private var isError = false
+    private var hasRecipes = false
 
-    fun onCreateNewRecipe() {
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        recipes.observeForever { allRecipes ->
+            hasRecipes = allRecipes.isNotEmpty()
+        }
+    }
+
+
+    fun onCreateNewRecipeClick() {
+        if (ratio.hasUnsavedDate) {
+            viewState.showCreateRecipeConfirmDialog()
+            return
+        }
+        viewState.resetView()
+    }
+
+    fun createNewRecipe() {
+        ratio.hasUnsavedDate = false
         viewState.resetView()
     }
 
@@ -40,14 +63,24 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
             recalculateSugarGram()
             recalculateButterGram()
         }
+
+        ratio.hasUnsavedDate = true
         viewState.closeKeyboard()
     }
 
     fun onShowSaveDialog(){
+        if (!ratio.isUpdate() && !ratio.hasUnsavedDate) {
+            viewState.showError(R.string.alert_save_empty_data, R.string.error_alert_title_warning)
+            return
+        }
         viewState.showSaveRecipeDialog()
     }
 
     fun onShowOpenDialog(){
+        if (!hasRecipes) {
+            viewState.showError(R.string.error_alert_description_no_saved_recipes, R.string.error_alert_title_info)
+            return
+        }
         viewState.showOpenRecipeDialog()
     }
 

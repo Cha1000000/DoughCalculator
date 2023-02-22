@@ -29,6 +29,7 @@ class SaveRecipePresenter(private val ratioModel: BaseRatioModel) : BasePresente
                 }
             }
         }
+        ratioModel.hasUnsavedDate = false
         MainActivity.Title.text = ratioModel.title
         MainActivity.Description.text = ratioModel.description
         viewState.saveRecipe()
