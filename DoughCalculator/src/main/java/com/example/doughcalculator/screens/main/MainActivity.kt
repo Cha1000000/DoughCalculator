@@ -33,9 +33,6 @@ import org.koin.android.ext.android.get
 class MainActivity : BaseActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
-
-    //private val ratioModel by lazy { ViewModelProvider(this)[RatioModel::class.java] }
-    //private val ratioModel: BaseRatioModel by inject()
     private var ratioModel: BaseRatioModel = get()
 
     @InjectPresenter
@@ -203,13 +200,11 @@ class MainActivity : BaseActivity(), MainView {
         const val SHORT_ZERO = 0.toShort()
         lateinit var appContext: Context
 
+        //TODO: should fix this crutch
         @SuppressLint("StaticFieldLeak")
         lateinit var Title: TextView
-
         @SuppressLint("StaticFieldLeak")
         lateinit var Description: TextView
     }
 
 }
-
-fun Fragment.getMainActivity() = activity as MainActivity
