@@ -171,40 +171,32 @@ class MainActivity : BaseActivity(), MainView {
         hideKeyboard()
     }
 
-    @SuppressLint("ResourceAsColor")
-    override fun validate() {
-        // assert ratioModel.waterPercent is not null
-        if (ratioModel.waterPercent.get()!! in 59.5..80.0) {
-            with(binding) {
-                tvWaterValidation.visibility = View.GONE
-                etWaterGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
-                tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-                tvWaterGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-            }
-        } else {
-            with(binding) {
-                tvWaterValidation.visibility = View.VISIBLE
-                etWaterGrams.setTextColor(getColor(R.color.text_red))
-                tvWaterPercent.setTextColor(getColor(R.color.text_red))
-                tvWaterGramsCorrection.setTextColor(getColor(R.color.text_red))
-            }
+    override fun showWaterValidationMessage() = with(binding) {
+            tvWaterValidation.visibility = View.VISIBLE
+            etWaterGrams.setTextColor(getColor(R.color.text_red))
+            tvWaterPercent.setTextColor(getColor(R.color.text_red))
+            tvWaterGramsCorrection.setTextColor(getColor(R.color.text_red))
         }
-        // assert ratioModel.saltPercent is not null
-        if (ratioModel.saltPercent.get()!! > 2.5) {
-            with(binding) {
-                tvSaltValidation.visibility = View.VISIBLE
-                etSaltGrams.setTextColor(getColor(R.color.text_red))
-                tvSaltPercent.setTextColor(getColor(R.color.text_red))
-                tvSaltGramsCorrection.setTextColor(getColor(R.color.text_red))
-            }
-        } else {
-            with(binding) {
-                tvSaltValidation.visibility = View.GONE
-                etSaltGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
-                tvSaltPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-                tvSaltGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-            }
+
+    override fun hideWaterValidationMessage() = with(binding) {
+            tvWaterValidation.visibility = View.GONE
+            etWaterGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
+            tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+            tvWaterGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
         }
+
+    override fun showSaltValidationMessage() = with(binding) {
+        tvSaltValidation.visibility = View.VISIBLE
+        etSaltGrams.setTextColor(getColor(R.color.text_red))
+        tvSaltPercent.setTextColor(getColor(R.color.text_red))
+        tvSaltGramsCorrection.setTextColor(getColor(R.color.text_red))
+    }
+
+    override fun hideSaltValidationMessage() = with(binding) {
+        tvSaltValidation.visibility = View.GONE
+        etSaltGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
+        tvSaltPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+        tvSaltGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
     }
 
     companion object {
@@ -221,4 +213,4 @@ class MainActivity : BaseActivity(), MainView {
 
 }
 
-fun Fragment.getMainActivity() = activity as MainActivity
+//fun Fragment.getMainActivity() = activity as MainActivity
