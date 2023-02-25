@@ -100,6 +100,15 @@ class MainActivity : BaseActivity(), MainView {
         )
     }
 
+    private fun backStackChangedListener() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                resetToolbar()
+                presenter.onRecipeChanged()
+            }
+        }
+    }
+
     private fun backButtonPressedListener() {
         onBackPressedDispatcher.addCallback(this) {
             val isNotHandled = forwardEventToFragments().not()

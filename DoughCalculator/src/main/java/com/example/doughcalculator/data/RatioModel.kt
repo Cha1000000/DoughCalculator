@@ -194,4 +194,15 @@ class RatioModel : ViewModel(), BaseRatioModel {
 
 
     override fun isUpdate(): Boolean = recipeId > 0L
+
+    override fun clone(): BaseRatioModel = this.memberwiseClone()
+
+    private fun BaseRatioModel.memberwiseClone(): BaseRatioModel {
+        val clone = this::class.java.newInstance()
+        this::class.java.declaredFields.forEach { field ->
+            field.isAccessible = true
+            field.set(clone, field.get(this))
+        }
+        return clone as BaseRatioModel
+    }
 }

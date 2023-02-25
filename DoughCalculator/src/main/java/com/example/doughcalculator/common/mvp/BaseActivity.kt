@@ -37,14 +37,6 @@ abstract class BaseActivity : MvpAppCompatActivity(), BaseView {
         setToolbarTitle(R.string.app_name)
     }
 
-    protected fun backStackChangedListener() {
-        supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount == 0) {
-                resetToolbar()
-            }
-        }
-    }
-
     override fun hideKeyboard() {
         (this as Activity).hideKeyboard()
     }
