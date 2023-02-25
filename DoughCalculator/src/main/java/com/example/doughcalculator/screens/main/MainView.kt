@@ -15,7 +15,16 @@ interface MainView: MvpView {
     fun showCreateRecipeConfirmDialog()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun validate()
+    fun showWaterValidationMessage()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun hideWaterValidationMessage()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showSaltValidationMessage()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun hideSaltValidationMessage()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun closeKeyboard()

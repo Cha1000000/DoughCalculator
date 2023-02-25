@@ -33,6 +33,9 @@ import org.koin.android.ext.android.get
 class MainActivity : BaseActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
+
+    //private val ratioModel by lazy { ViewModelProvider(this)[RatioModel::class.java] }
+    //private val ratioModel: BaseRatioModel by inject()
     private var ratioModel: BaseRatioModel = get()
 
     @InjectPresenter
@@ -97,6 +100,15 @@ class MainActivity : BaseActivity(), MainView {
         )
     }
 
+    private fun backStackChangedListener() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                resetToolbar()
+                presenter.onRecipeChanged()
+            }
+        }
+    }
+
     private fun backButtonPressedListener() {
         onBackPressedDispatcher.addCallback(this) {
             val isNotHandled = forwardEventToFragments().not()
@@ -159,40 +171,32 @@ class MainActivity : BaseActivity(), MainView {
         hideKeyboard()
     }
 
-    @SuppressLint("ResourceAsColor")
-    override fun validate() {
-        // assert ratioModel.waterPercent is not null
-        if (ratioModel.waterPercent.get()!! in 59.5..80.0) {
-            with(binding) {
-                tvWaterValidation.visibility = View.GONE
-                etWaterGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
-                tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-                tvWaterGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-            }
-        } else {
-            with(binding) {
-                tvWaterValidation.visibility = View.VISIBLE
-                etWaterGrams.setTextColor(getColor(R.color.text_red))
-                tvWaterPercent.setTextColor(getColor(R.color.text_red))
-                tvWaterGramsCorrection.setTextColor(getColor(R.color.text_red))
-            }
+    override fun showWaterValidationMessage() = with(binding) {
+            tvWaterValidation.visibility = View.VISIBLE
+            etWaterGrams.setTextColor(getColor(R.color.text_red))
+            tvWaterPercent.setTextColor(getColor(R.color.text_red))
+            tvWaterGramsCorrection.setTextColor(getColor(R.color.text_red))
         }
-        // assert ratioModel.saltPercent is not null
-        if (ratioModel.saltPercent.get()!! > 2.5) {
-            with(binding) {
-                tvSaltValidation.visibility = View.VISIBLE
-                etSaltGrams.setTextColor(getColor(R.color.text_red))
-                tvSaltPercent.setTextColor(getColor(R.color.text_red))
-                tvSaltGramsCorrection.setTextColor(getColor(R.color.text_red))
-            }
-        } else {
-            with(binding) {
-                tvSaltValidation.visibility = View.GONE
-                etSaltGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
-                tvSaltPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-                tvSaltGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
-            }
+
+    override fun hideWaterValidationMessage() = with(binding) {
+            tvWaterValidation.visibility = View.GONE
+            etWaterGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
+            tvWaterPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+            tvWaterGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
         }
+
+    override fun showSaltValidationMessage() = with(binding) {
+        tvSaltValidation.visibility = View.VISIBLE
+        etSaltGrams.setTextColor(getColor(R.color.text_red))
+        tvSaltPercent.setTextColor(getColor(R.color.text_red))
+        tvSaltGramsCorrection.setTextColor(getColor(R.color.text_red))
+    }
+
+    override fun hideSaltValidationMessage() = with(binding) {
+        tvSaltValidation.visibility = View.GONE
+        etSaltGrams.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorPrimary))
+        tvSaltPercent.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
+        tvSaltGramsCorrection.setTextColor(applicationContext!!.getColorResCompat(android.R.attr.textColorSecondary))
     }
 
     companion object {
@@ -200,11 +204,13 @@ class MainActivity : BaseActivity(), MainView {
         const val SHORT_ZERO = 0.toShort()
         lateinit var appContext: Context
 
-        //TODO: should fix this crutch
         @SuppressLint("StaticFieldLeak")
         lateinit var Title: TextView
+
         @SuppressLint("StaticFieldLeak")
         lateinit var Description: TextView
     }
 
 }
+
+//fun Fragment.getMainActivity() = activity as MainActivity

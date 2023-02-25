@@ -15,8 +15,12 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private val dataSource: DoughRecipeDao by inject()
     private val recipes = dataSource.getAllRecipesLive().asLiveData()
+    private var currentRecipeId = ratio.recipeId
+    private var ratioOriginalState = ratio.clone()
     private var isError = false
     private var hasRecipes = false
+    private var hasSaltValidationError = false
+    private var hasWaterValidationError = false
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -24,7 +28,6 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
             hasRecipes = allRecipes.isNotEmpty()
         }
     }
-
 
     fun onCreateNewRecipeClick() {
         if (ratio.hasUnsavedDate) {
@@ -37,6 +40,7 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
     fun createNewRecipe() {
         ratio.hasUnsavedDate = false
         viewState.resetView()
+        resetValidation()
     }
 
     fun onCalculate() {
@@ -54,21 +58,22 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
         calculateSugarPercent()
         calculateButterPercent()
 
-        viewState.validate()
-
         if (ratio.flourGramCorrection != null
-            && ratio.flourGramCorrection!! > SHORT_ZERO) {
+            && ratio.flourGramCorrection!! > SHORT_ZERO
+        ) {
             recalculateWaterGram()
             recalculateSaltGram()
             recalculateSugarGram()
             recalculateButterGram()
         }
 
-        ratio.hasUnsavedDate = true
+        if (getIsCalculationChanged())
+            ratio.hasUnsavedDate = true
+
         viewState.closeKeyboard()
     }
 
-    fun onShowSaveDialog(){
+    fun onShowSaveDialog() {
         if (!ratio.isUpdate() && !ratio.hasUnsavedDate) {
             viewState.showError(R.string.alert_save_empty_data, R.string.error_alert_title_warning)
             return
@@ -76,12 +81,44 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
         viewState.showSaveRecipeDialog()
     }
 
-    fun onShowOpenDialog(){
+    fun onShowOpenDialog() {
         if (!hasRecipes) {
-            viewState.showError(R.string.error_alert_description_no_saved_recipes, R.string.error_alert_title_info)
+            viewState.showError(
+                R.string.error_alert_description_no_saved_recipes,
+                R.string.error_alert_title_info
+            )
             return
         }
         viewState.showOpenRecipeDialog()
+    }
+
+    fun onRecipeChanged() {
+        if (currentRecipeId != ratio.recipeId) {
+            currentRecipeId = ratio.recipeId
+            ratioOriginalState = ratio.clone()
+            resetValidation()
+        }
+    }
+
+    private fun resetValidation() {
+        if (hasWaterValidationError) {
+            hasWaterValidationError = false
+            viewState.hideWaterValidationMessage()
+        }
+
+        if (hasSaltValidationError) {
+            hasSaltValidationError = false
+            viewState.hideSaltValidationMessage()
+        }
+    }
+
+    private fun getIsCalculationChanged(): Boolean {
+        return with(ratioOriginalState) {
+            flourGram != ratio.flourGram ||
+                    waterGram != ratio.waterGram ||
+                    saltGram != ratio.saltGram ||
+                    flourGramCorrection != ratio.flourGramCorrection
+        }
     }
 
     private fun calculateIngredientPercent(gram: Short): Double {
@@ -94,29 +131,52 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun calculateWaterPercent() {
         if (ratio.waterGram == null
-            || ratio.waterGram!! == SHORT_ZERO) {
+            || ratio.waterGram!! == SHORT_ZERO
+        ) {
             viewState.showError(R.string.error_invalid_water_input)
             isError = true
             return
         }
         ratio.waterPercent.set(calculateIngredientPercent(ratio.waterGram!!))
         isError = false
+
+        hasWaterValidationError = if (ratio.waterPercent.get()!! !in 59.5..80.0) {
+            if (hasWaterValidationError) return
+            viewState.showWaterValidationMessage()
+            true
+        } else {
+            if (!hasWaterValidationError) return
+            viewState.hideWaterValidationMessage()
+            false
+        }
     }
 
     private fun calculateSaltPercent() {
         if (ratio.saltGram == null
-            || ratio.saltGram!! == SHORT_ZERO) {
+            || ratio.saltGram!! == SHORT_ZERO
+        ) {
             viewState.showError(R.string.error_invalid_salt_input)
             isError = true
             return
         }
         ratio.saltPercent.set(calculateIngredientPercent(ratio.saltGram!!))
         isError = false
+
+        hasSaltValidationError = if (ratio.saltPercent.get()!! > 2.5) {
+            if (hasSaltValidationError) return
+            viewState.showSaltValidationMessage()
+            true
+        } else {
+            if (!hasSaltValidationError) return
+            viewState.hideSaltValidationMessage()
+            false
+        }
     }
 
     private fun calculateSugarPercent() {
         if (ratio.sugarGram == null
-            || ratio.sugarGram!! == SHORT_ZERO) {
+            || ratio.sugarGram!! == SHORT_ZERO
+        ) {
             ratio.sugarPercent.set(null)
             return
         }
@@ -125,7 +185,8 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun calculateButterPercent() {
         if (ratio.butterGram == null
-            || ratio.butterGram!! == SHORT_ZERO) {
+            || ratio.butterGram!! == SHORT_ZERO
+        ) {
             ratio.butterPercent.set(null)
             return
         }
@@ -154,7 +215,8 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun recalculateSugarGram() {
         if (ratio.sugarGram == null
-            || ratio.sugarGram!! == SHORT_ZERO) {
+            || ratio.sugarGram!! == SHORT_ZERO
+        ) {
             ratio.sugarGramCorrection.set(null)
             return
         }
@@ -169,7 +231,8 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun recalculateButterGram() {
         if (ratio.butterGram == null
-            || ratio.butterGram!! == SHORT_ZERO) {
+            || ratio.butterGram!! == SHORT_ZERO
+        ) {
             ratio.butterGramCorrection.set(null)
             return
         }
