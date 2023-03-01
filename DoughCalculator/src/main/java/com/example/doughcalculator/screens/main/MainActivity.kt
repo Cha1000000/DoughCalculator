@@ -33,9 +33,6 @@ import org.koin.android.ext.android.get
 class MainActivity : BaseActivity(), MainView {
 
     private lateinit var binding: ActivityMainBinding
-
-    //private val ratioModel by lazy { ViewModelProvider(this)[RatioModel::class.java] }
-    //private val ratioModel: BaseRatioModel by inject()
     private var ratioModel: BaseRatioModel = get()
 
     @InjectPresenter
@@ -212,5 +209,3 @@ class MainActivity : BaseActivity(), MainView {
     }
 
 }
-
-//fun Fragment.getMainActivity() = activity as MainActivity

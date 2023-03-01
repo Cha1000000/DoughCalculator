@@ -48,7 +48,7 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
         binding.apply {
             rcView.setHasFixedSize(true)
             rcView.layoutManager =
-                LinearLayoutManager(context) // GridLayoutManager(context, COLUMN_COUNT)
+                LinearLayoutManager(context)
 
             recipeAdapter = RecipeAdapter(recipes as ArrayList<BaseRecipeModel>)
                 .also { adapter ->
@@ -79,10 +79,6 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
         )
     }
 
-    override fun removeRecipe(item: BaseRecipeModel) {
-        recipeAdapter.deleteItem(item)
-    }
-
     override fun onBackPressed(): Boolean {
         closeFragment()
         return true
@@ -92,8 +88,5 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
         @JvmStatic
         fun getInstance(model: BaseRatioModel) =
             OpenRecipeFragment().apply { this.ratioModel = model }
-
-        //const val COLUMN_COUNT = 1
     }
-
 }

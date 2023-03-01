@@ -13,11 +13,9 @@ interface DoughRecipeDao {
     fun update(recipe: DoughRecipeEntity)
 
     @Query("SELECT * FROM dough_recipes_table WHERE title = :recipeTitle")
-//    @Query("SELECT * FROM dough_recipes_table WHERE title LIKE :recipeTitle")
     fun getByTitle(recipeTitle: String): DoughRecipeEntity
 
     @Query("SELECT * FROM dough_recipes_table WHERE recipeId = :id")
-//    @Query("SELECT * FROM dough_recipes_table WHERE recipeId LIKE :id")
     fun getById(id: Long): DoughRecipeEntity
 
     @Query("SELECT * FROM dough_recipes_table ORDER BY is_favorite DESC")
@@ -31,9 +29,6 @@ interface DoughRecipeDao {
 
     @Query("DELETE FROM dough_recipes_table WHERE recipeId = :id")
     fun deleteById(id: Long)
-
-    //@Delete
-    //fun deleteRecipes(recipes: List<DoughRecipe>): Int
 
     @Query("DELETE FROM dough_recipes_table")
     fun clear()

@@ -35,18 +35,6 @@ class RecipeAdapter(
 
     override fun getItemCount(): Int = recipeList.size
 
-    /*@SuppressLint("NotifyDataSetChanged")
-    fun addItem(item: BaseRecipeModel) {
-        recipeList.add(item)
-        notifyDataSetChanged()
-    }*/
-
-    fun deleteItem(item: BaseRecipeModel) {
-        val index = recipeList.indexOf(item)
-        recipeList.remove(item)
-        notifyItemRemoved(index)
-    }
-
     inner class RecipeHolder(binding: FragmentRecipeItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

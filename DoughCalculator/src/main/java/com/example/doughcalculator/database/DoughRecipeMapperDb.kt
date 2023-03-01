@@ -1,10 +1,7 @@
 package com.example.doughcalculator.database
 
 import com.example.doughcalculator.data.BaseRatioModel
-import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.data.RecipeTitleModel
-
-//class DoughRecipeMapperDb {
 
 fun mapToDb(ratioModels: List<BaseRatioModel>) = ratioModels.map {
     with(it) {
@@ -79,5 +76,3 @@ fun BaseRatioModel.mapFromEntity(entity: DoughRecipeEntity) =
         sugarPercent.set(entity.sugarPercent)
         butterPercent.set(entity.butterPercent)
     }
-
-//}

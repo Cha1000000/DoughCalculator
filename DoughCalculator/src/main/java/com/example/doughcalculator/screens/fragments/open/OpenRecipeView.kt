@@ -15,9 +15,6 @@ interface OpenRecipeView : BaseView {
     fun openRecipe()
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun removeRecipe(item: BaseRecipeModel)
-
-    @StateStrategyType(OneExecutionStateStrategy::class)
     fun showRemoveRecipeConfirmDialog(recipe: BaseRecipeModel)
 
 }
