@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_input_layout_edit_text_size">32sp</dimen>
+    <dimen name="text_input_layout_edit_text_size_medium">24sp</dimen>
+    <dimen name="text_input_layout_hint_text_size">16sp</dimen>
+
+    <dimen name="edit_text_padding_start_normal">8dp</dimen>
+    <dimen name="edit_text_padding_top_normal">28dp</dimen>
+    <dimen name="edit_text_padding_bottom_normal">4dp</dimen>
+
+    <dimen name="action_button_height">80dp</dimen>
+    <dimen name="action_button_text_size">28sp</dimen>
+
+    <dimen name="ingredient_text_size">20sp</dimen>
+    <dimen name="text_margin">6dp</dimen>
+</resources>

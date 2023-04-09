@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainActivity">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.doughcalculator.screens.main.MainActivity"
+        android:label="MainActivity" />
+    <fragment
+        android:id="@+id/saveRecipeFragment"
+        android:name="com.example.doughcalculator.screens.fragments.save.SaveRecipeFragment"
+        android:label="fragment_save_recipe"
+        tools:layout="@layout/fragment_save_recipe" >
+        <action
+            android:id="@+id/action_saveRecipeFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/openRecipeFragment"
+        android:name="com.example.doughcalculator.screens.fragments.open.OpenRecipeFragment"
+        android:label="fragment_recipes_list"
+        tools:layout="@layout/fragment_recipes_list" >
+        <action
+            android:id="@+id/action_openRecipeFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+</navigation>
