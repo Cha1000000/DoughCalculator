@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".screens.fragments.calculation.CalculationFragment">
+
+    <data>
+        <variable
+            name="ratio"
+            type="com.example.doughcalculator.data.RatioModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_main">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/main_menu"
+            app:title="@string/app_name" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/ingredient_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarMain"
+            android:text="@={ratio.title}"
+            tools:ignore="TextContrastCheck"
+            tools:text="Название рецепа"
+            tools:visibility="visible" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:stretchColumns="0,1,2,3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    style="@style/table_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp">
+
+                    <TextView
+                        style="@style/table_title"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:text="@string/title_ingredient"
+                        tools:ignore="RtlSymmetry,TextContrastCheck" />
+
+                    <TextView
+                        style="@style/table_title"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:text="@string/title_grams"
+                        android:textAlignment="center"
+                        tools:ignore="TextContrastCheck" />
+
+                    <TextView
+                        style="@style/table_title"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:text="@string/title_percent"
+                        android:textAlignment="center"
+                        tools:ignore="TextContrastCheck" />
+
+                    <TextView
+                        style="@style/table_title"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.9"
+                        android:text="@string/title_correction"
+                        android:textAlignment="center"
+                        tools:ignore="TextContrastCheck" />
+
+                </TableRow>
+
+                <TableRow
+                    style="@style/table_row"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        style="@style/ingredient_title"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:text="@string/flour" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_flour_grams"
+                        style="@style/TextInputEditText.Digits"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:nextFocusForward="@id/et_water_grams"
+                        android:text="@={ratio.flourGramBindingVariable}"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
+
+                    <TextView
+                        style="@style/TextViewReadOnly"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:text="@string/flour_const_percent" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_flour_grams_correction"
+                        style="@style/TextInputEditText.Digits"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.9"
+                        android:gravity="center_horizontal"
+                        android:importantForAutofill="no"
+                        android:text="@={ratio.flourGramCorrectionBindingVariable}" />
+
+                </TableRow>
+
+                <TableRow
+                    style="@style/table_row"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        style="@style/ingredient_title"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:text="@string/water" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_water_grams"
+                        style="@style/TextInputEditText.Digits"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:nextFocusForward="@id/et_salt_grams"
+                        android:text="@={ratio.waterGramBindingVariable}" />
+
+                    <TextView
+                        android:id="@+id/tv_water_percent"
+                        style="@style/TextViewReadOnly"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:text="@={ratio.waterPercentBindingVariable}" />
+
+                    <TextView
+                        android:id="@+id/tv_water_grams_correction"
+                        style="@style/TextViewReadOnly"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.9"
+                        android:text="@={ratio.waterGramCorrectionBindingVariable}" />
+
+                </TableRow>
+
+                <TextView
+                    android:id="@+id/tv_water_validation"
+                    style="@style/TextInputLayoutError"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="9dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/alert_water_valid_range"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <TableRow
+                    style="@style/table_row"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        style="@style/ingredient_title"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:text="@string/salt" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_salt_grams"
+                        style="@style/TextInputEditText.Digits"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:nextFocusForward="@id/et_sugar_grams"
+                        android:text="@={ratio.saltGramBindingVariable}" />
+
+                    <TextView
+                        android:id="@+id/tv_salt_percent"
+                        style="@style/TextViewReadOnly"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:text="@={ratio.saltPercentBindingVariable}" />
+
+                    <TextView
+                        android:id="@+id/tv_salt_grams_correction"
+                        style="@style/TextViewReadOnly"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.9"
+                        android:text="@={ratio.saltGramCorrectionBindingVariable}" />
+
+                </TableRow>
+
+                <TextView
+                    android:id="@+id/tv_salt_validation"
+                    style="@style/TextInputLayoutError"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="9dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/error_alert_salt_invalid_range"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <TableRow
+                    style="@style/table_row"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        style="@style/ingredient_title"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:text="@string/sugar_honey" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_sugar_grams"
+                        style="@style/TextInputEditText.Digits"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:nextFocusForward="@id/et_butter_grams"
+                        android:text="@={ratio.sugarGramBindingVariable}" />
+
+                    <TextView
+                        android:id="@+id/tv_sugar_percent"
+                        style="@style/TextViewReadOnly"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:text="@={ratio.sugarPercentBindingVariable}" />
+
+                    <TextView
+                        android:id="@+id/tv_sugar_grams_correction"
+                        style="@style/TextViewReadOnly"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.9"
+                        android:text="@={ratio.sugarGramCorrectionBindingVariable}" />
+
+                </TableRow>
+
+                <TableRow
+                    style="@style/table_row"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        style="@style/ingredient_title"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:text="@string/butter" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_butter_grams"
+                        style="@style/TextInputEditText.Digits"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:text="@={ratio.butterGramBindingVariable}" />
+
+                    <TextView
+                        android:id="@+id/tv_butter_percent"
+                        style="@style/TextViewReadOnly"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:text="@={ratio.butterPercentBindingVariable}" />
+
+                    <TextView
+                        android:id="@+id/tv_butter_grams_correction"
+                        style="@style/TextViewReadOnly"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.9"
+                        android:text="@={ratio.butterGramCorrectionBindingVariable}" />
+
+                </TableRow>
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="@={ratio.description}"
+                    tools:text="Текст описания рецепта"
+                    tools:visibility="visible"
+                    style="@style/text_description" />
+            </TableLayout>
+
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/bt_calculate"
+                style="@style/action_button"
+                android:text="@string/button_calculate_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="TextContrastCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/calculation_destination">
+
+    <fragment
+        android:id="@+id/calculation_destination"
+        android:name="com.example.doughcalculator.screens.fragments.calculation.CalculationFragment"
+        android:label="fragment_calculation"
+        tools:layout="@layout/fragment_calculation" >
+        <action
+            android:id="@+id/action_calculation_to_recipes"
+            app:destination="@id/open_recipe_destination"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/calculation_destination" />
+        <action
+            android:id="@+id/action_calculation_to_saving"
+            app:destination="@id/save_recipe_destination"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/calculation_destination" />
+    </fragment>
+    <fragment
+        android:id="@+id/save_recipe_destination"
+        android:name="com.example.doughcalculator.screens.fragments.save.SaveRecipeFragment"
+        android:label="fragment_save_recipe"
+        tools:layout="@layout/fragment_save_recipe">
+        <argument
+            android:name="ratioModel"
+            app:argType="com.example.doughcalculator.data.RatioModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/open_recipe_destination"
+        android:name="com.example.doughcalculator.screens.fragments.open.OpenRecipeFragment"
+        android:label="fragment_recipes_list"
+        tools:layout="@layout/fragment_recipes_list">
+        <argument
+            android:name="ratioModel"
+            app:argType="com.example.doughcalculator.data.RatioModel" />
+    </fragment>
+
+</navigation>

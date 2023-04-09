@@ -8,16 +8,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doughcalculator.R
 import com.example.doughcalculator.common.callback.OnBackPressedListener
+import com.example.doughcalculator.common.extensions.showAlertDialog
 import com.example.doughcalculator.common.mvp.BaseFragment
+import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.BaseRecipeModel
 import com.example.doughcalculator.databinding.FragmentRecipesListBinding
-import com.example.doughcalculator.common.extensions.showAlertDialog
-import com.example.doughcalculator.data.BaseRatioModel
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import org.koin.core.component.KoinComponent
 
-class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener, KoinComponent {
+class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener {
 
     private lateinit var binding: FragmentRecipesListBinding
     private lateinit var recipeAdapter: RecipeAdapter

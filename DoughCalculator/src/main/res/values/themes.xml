@@ -10,8 +10,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Disable system toolbar-->
-        <!-- <item name="windowActionBar">false</item>-->
-        <!-- <item name="windowNoTitle">true</item>-->
+         <item name="windowActionBar">false</item>
+         <item name="windowNoTitle">true</item>
         <!-- Hide status bar-->
         <item name="android:windowFullscreen">true</item>
         <!-- Status bar color. -->

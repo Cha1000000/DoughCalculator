@@ -1,9 +1,11 @@
 package com.example.doughcalculator.data
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 
-class RatioModel : ViewModel(), BaseRatioModel {
+class RatioModel() : ViewModel(), BaseRatioModel, Parcelable {
     override var recipeId: Long = 0L
 
     override var title: String = ""
@@ -192,6 +194,14 @@ class RatioModel : ViewModel(), BaseRatioModel {
         }
     var butterPercentBindingVariable = ObservableField("")
 
+    constructor(parcel: Parcel) : this() {
+        recipeId = parcel.readLong()
+        title = parcel.readString()!!
+        description = parcel.readString()!!
+        isFavorite = parcel.readByte() != 0.toByte()
+        hasUnsavedDate = parcel.readByte() != 0.toByte()
+    }
+
 
     override fun isUpdate(): Boolean = recipeId > 0L
 
@@ -204,5 +214,27 @@ class RatioModel : ViewModel(), BaseRatioModel {
             field.set(clone, field.get(this))
         }
         return clone as BaseRatioModel
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeLong(recipeId)
+        parcel.writeString(title)
+        parcel.writeString(description)
+        parcel.writeByte(if (isFavorite) 1 else 0)
+        parcel.writeByte(if (hasUnsavedDate) 1 else 0)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<RatioModel> {
+        override fun createFromParcel(parcel: Parcel): RatioModel {
+            return RatioModel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<RatioModel?> {
+            return arrayOfNulls(size)
+        }
     }
 }
