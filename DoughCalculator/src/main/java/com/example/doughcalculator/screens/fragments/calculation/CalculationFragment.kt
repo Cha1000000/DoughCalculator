@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
@@ -47,6 +48,7 @@ class CalculationFragment : BaseFragment(), CalculationView {
         return binding.root
     }
 
+    @SuppressLint("RestrictedApi")
     private fun initView() = with(binding) {
         ratio = ratioModel as RatioModel?
         btCalculate.setOnClickListener { presenter.onCalculate() }
@@ -55,6 +57,21 @@ class CalculationFragment : BaseFragment(), CalculationView {
         }
         tvDescription.addTextChangedListener {
             tvDescription.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
+        }
+        //val appBarConfiguration = AppBarConfiguration(findNavController().graph)
+        toolbarMain.apply {
+            menu.apply {
+                (this as MenuBuilder).setOptionalIconsVisible(true)
+            }
+            //setupWithNavController(findNavController(), appBarConfiguration)
+            setOnMenuItemClickListener { item ->
+                when (item?.itemId) {
+                    R.id.mi_new -> presenter.onCreateNewRecipeClick()
+                    R.id.mi_open -> presenter.onShowOpenDialog()
+                    R.id.mi_save -> presenter.onShowSaveDialog()
+                }
+                true
+            }
         }
         MainActivity.Title = tvTitle
         MainActivity.Description = tvDescription
@@ -119,21 +136,6 @@ class CalculationFragment : BaseFragment(), CalculationView {
         etSaltGrams.setTextColor(requireContext().getColorResCompat(android.R.attr.textColorPrimary))
         tvSaltPercent.setTextColor(requireContext().getColorResCompat(android.R.attr.textColorSecondary))
         tvSaltGramsCorrection.setTextColor(requireContext().getColorResCompat(android.R.attr.textColorSecondary))
-    }
-
-    @SuppressLint("RestrictedApi")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (menu is MenuBuilder) menu.setOptionalIconsVisible(true)
-        //inflater.inflate(R.menu.main_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.mi_new -> presenter.onCreateNewRecipeClick()
-            R.id.mi_open -> presenter.onShowOpenDialog()
-            R.id.mi_save -> presenter.onShowSaveDialog()
-        }
-        return true
     }
 
     companion object {

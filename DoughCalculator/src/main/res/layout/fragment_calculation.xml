@@ -23,13 +23,14 @@
             android:id="@+id/toolbarMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/main_menu"
+            app:titleTextColor="@color/white"
             app:title="@string/app_name" />
 
         <TextView
