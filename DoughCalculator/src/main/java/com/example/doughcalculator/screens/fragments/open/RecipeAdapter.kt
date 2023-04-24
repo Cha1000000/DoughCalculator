@@ -6,7 +6,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.doughcalculator.data.BaseRecipeModel
-import com.example.doughcalculator.databinding.FragmentRecipeItemBinding
+import com.example.doughcalculator.databinding.ViewholderRecipeItemBinding
 
 /**
  * [RecyclerView.Adapter] that can display a [BaseRecipeModel].
@@ -20,7 +20,7 @@ class RecipeAdapter(
     var onItemSetFavoriteClick: ((BaseRecipeModel) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder = RecipeHolder(
-        FragmentRecipeItemBinding.inflate(
+        ViewholderRecipeItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -47,7 +47,7 @@ class RecipeAdapter(
         notifyItemRemoved(index)
     }
 
-    inner class RecipeHolder(binding: FragmentRecipeItemBinding) :
+    inner class RecipeHolder(binding: ViewholderRecipeItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private var itemTitle: TextView = binding.tvRecipeTitle

@@ -16,12 +16,13 @@ import moxy.InjectViewState
 import org.koin.core.component.inject
 
 @InjectViewState
-class OpenRecipePresenter(private val ratioModel: BaseRatioModel) : BasePresenter<OpenRecipeView>() {
+class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
 
     private val dataSource: DoughRecipeDao by inject()
     //private var recipeSource = MutableLiveData<List<DoughRecipeEntity>?>()
     private var myRecipes = MutableLiveData<List<BaseRecipeModel>?>()
     private val recipes = dataSource.getAllRecipesLive().asLiveData()
+    lateinit var model: BaseRatioModel
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -47,9 +48,9 @@ class OpenRecipePresenter(private val ratioModel: BaseRatioModel) : BasePresente
     fun onRecipeSelect(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
             val recipeData = dataSource.getById(recipe.recipeId)
-            ratioModel.mapFromEntity(recipeData)
-            MainActivity.Title.text = ratioModel.title
-            MainActivity.Description.text = ratioModel.description
+            model.mapFromEntity(recipeData)
+            MainActivity.Title.text = model.title
+            MainActivity.Description.text = model.description
             viewState.openRecipe()
         }
     }

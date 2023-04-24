@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.doughcalculator.R
 import com.example.doughcalculator.common.extensions.getColorResCompat
 import com.example.doughcalculator.common.extensions.showAlertDialog
@@ -36,14 +38,13 @@ class CalculationFragment : BaseFragment(), CalculationView {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_calculation,
             container,
             false
         )
-        binding.lifecycleOwner = this
         initView()
         return binding.root
     }
@@ -58,12 +59,10 @@ class CalculationFragment : BaseFragment(), CalculationView {
         tvDescription.addTextChangedListener {
             tvDescription.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
         }
-        //val appBarConfiguration = AppBarConfiguration(findNavController().graph)
         toolbarMain.apply {
             menu.apply {
                 (this as MenuBuilder).setOptionalIconsVisible(true)
             }
-            //setupWithNavController(findNavController(), appBarConfiguration)
             setOnMenuItemClickListener { item ->
                 when (item?.itemId) {
                     R.id.mi_new -> presenter.onCreateNewRecipeClick()
@@ -99,11 +98,11 @@ class CalculationFragment : BaseFragment(), CalculationView {
     }
 
     override fun showSaveRecipeDialog() {
-        //TODO: navigate to save recipe fragment
+        findNavController().navigate(CalculationFragmentDirections.actionCalculationToSaving(ratioModel))
     }
 
     override fun showOpenRecipeDialog() {
-        //TODO: navigate to save recipe fragment
+        findNavController().navigate(CalculationFragmentDirections.actionCalculationToRecipes(ratioModel))
     }
 
     override fun showError(@StringRes msgRes: Int, @StringRes titleRes: Int) {

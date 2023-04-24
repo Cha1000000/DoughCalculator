@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doughcalculator.R
-import com.example.doughcalculator.common.callback.OnBackPressedListener
 import com.example.doughcalculator.common.extensions.showAlertDialog
 import com.example.doughcalculator.common.mvp.BaseFragment
 import com.example.doughcalculator.data.BaseRatioModel
@@ -16,7 +16,7 @@ import com.example.doughcalculator.databinding.FragmentRecipesListBinding
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 
-class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener {
+class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
 
     private lateinit var binding: FragmentRecipesListBinding
     private lateinit var recipeAdapter: RecipeAdapter
@@ -26,7 +26,11 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
     internal lateinit var presenter: OpenRecipePresenter
 
     @ProvidePresenter
-    fun providePresenter() = OpenRecipePresenter(ratioModel)
+    fun providePresenter() = OpenRecipePresenter().apply {
+        val args = OpenRecipeFragmentArgs.fromBundle(requireArguments())
+        ratioModel = args.ratioModel
+        model = ratioModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +43,10 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
             container,
             false
         )
-        binding.lifecycleOwner = this
+        setBackButtonPressedListener {
+            findNavController()
+                .navigate(OpenRecipeFragmentDirections.actionOpenRecipeDestinationToCalculationDestination())
+        }
         return binding.root
     }
 
@@ -67,7 +74,8 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
     }
 
     override fun openRecipe() {
-        closeFragment()
+        findNavController()
+            .navigate(OpenRecipeFragmentDirections.actionOpenRecipeDestinationToCalculationDestination())
     }
 
     override fun showRemoveRecipeConfirmDialog(recipe: BaseRecipeModel) {
@@ -81,18 +89,4 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
     override fun removeRecipe(item: BaseRecipeModel) {
         recipeAdapter.deleteItem(item)
     }
-
-    override fun onBackPressed(): Boolean {
-        closeFragment()
-        return true
-    }
-
-    companion object {
-        @JvmStatic
-        fun getInstance(model: BaseRatioModel) =
-            OpenRecipeFragment().apply { this.ratioModel = model }
-
-        //const val COLUMN_COUNT = 1
-    }
-
 }

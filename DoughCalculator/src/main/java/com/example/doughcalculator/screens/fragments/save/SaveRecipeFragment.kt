@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.example.doughcalculator.R
-import com.example.doughcalculator.common.callback.OnBackPressedListener
 import com.example.doughcalculator.common.mvp.BaseFragment
 import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.RatioModel
@@ -15,7 +15,7 @@ import com.example.doughcalculator.databinding.FragmentSaveRecipeBinding
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 
-class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener {
+class SaveRecipeFragment : BaseFragment(), SaveRecipeView {
 
     private lateinit var binding: FragmentSaveRecipeBinding
     private lateinit var ratioModel: BaseRatioModel
@@ -24,7 +24,11 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener
     internal lateinit var presenter: SaveRecipePresenter
 
     @ProvidePresenter
-    fun providePresenter() = SaveRecipePresenter(ratioModel)
+    fun providePresenter() = SaveRecipePresenter().apply {
+        val args = SaveRecipeFragmentArgs.fromBundle(requireArguments())
+        ratioModel = args.ratioModel
+        model = ratioModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +41,11 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener
             container,
             false
         )
-        binding.lifecycleOwner = this
         initFragment()
+        setBackButtonPressedListener {
+            findNavController()
+                .navigate(SaveRecipeFragmentDirections.actionSaveRecipeDestinationToCalculationDestination())
+        }
         return binding.root
     }
 
@@ -49,18 +56,7 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView, OnBackPressedListener
         textTitle.addTextChangedListener { btSave.isEnabled = it?.isNotEmpty() ?: false }
     }
 
-    override fun onBackPressed(): Boolean {
-        closeFragment()
-        return true
-    }
-
-    companion object {
-        @JvmStatic
-        fun getInstance(model: BaseRatioModel) =
-            SaveRecipeFragment().apply { this.ratioModel = model }
-    }
-
     override fun saveRecipe() {
-        closeFragment()
+        findNavController().navigate(SaveRecipeFragmentDirections.actionSaveRecipeDestinationToCalculationDestination())
     }
 }
