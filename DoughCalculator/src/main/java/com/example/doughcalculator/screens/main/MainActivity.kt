@@ -5,10 +5,10 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.TextView
 import com.example.doughcalculator.R
-import com.example.doughcalculator.common.mvp.BaseActivity
+import moxy.MvpAppCompatActivity
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : MvpAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

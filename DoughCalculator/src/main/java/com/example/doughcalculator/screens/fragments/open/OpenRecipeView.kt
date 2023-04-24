@@ -6,18 +6,16 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.OneExecutionStateStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
+@StateStrategyType(OneExecutionStateStrategy::class)
 interface OpenRecipeView : BaseView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun loadRecipeList(items: List<BaseRecipeModel>)
 
-    @StateStrategyType(OneExecutionStateStrategy::class)
     fun openRecipe()
 
-    @StateStrategyType(OneExecutionStateStrategy::class)
     fun removeRecipe(item: BaseRecipeModel)
 
-    @StateStrategyType(OneExecutionStateStrategy::class)
     fun showRemoveRecipeConfirmDialog(recipe: BaseRecipeModel)
 
 }

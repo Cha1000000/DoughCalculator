@@ -50,7 +50,11 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
         return binding.root
     }
 
-    private fun initList(recipes: List<BaseRecipeModel>) {
+    override fun loadRecipeList(items: List<BaseRecipeModel>) {
+        initRecycler(items)
+    }
+
+    private fun initRecycler(recipes: List<BaseRecipeModel>) {
         binding.apply {
             rcView.setHasFixedSize(true)
             rcView.layoutManager =
@@ -67,10 +71,6 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
 
             rcView.adapter = recipeAdapter
         }
-    }
-
-    override fun loadRecipeList(items: List<BaseRecipeModel>) {
-        initList(items)
     }
 
     override fun openRecipe() {
