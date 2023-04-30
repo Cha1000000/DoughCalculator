@@ -3,6 +3,7 @@ package com.example.doughcalculator.screens.fragments.calculation
 import androidx.annotation.StringRes
 import com.example.doughcalculator.R
 import com.example.doughcalculator.common.mvp.BaseView
+import com.example.doughcalculator.data.BaseRatioModel
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.OneExecutionStateStrategy
 import moxy.viewstate.strategy.StateStrategyType
@@ -33,6 +34,6 @@ interface CalculationView: BaseView {
     fun showOpenRecipeDialog()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun resetView()
+    fun createNewRecipe(recipe: BaseRatioModel)
 
 }

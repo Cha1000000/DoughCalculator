@@ -9,8 +9,6 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.doughcalculator.R
 import com.example.doughcalculator.common.extensions.getColorResCompat
 import com.example.doughcalculator.common.extensions.showAlertDialog
@@ -51,7 +49,7 @@ class CalculationFragment : BaseFragment(), CalculationView {
 
     @SuppressLint("RestrictedApi")
     private fun initView() = with(binding) {
-        ratio = ratioModel as RatioModel?
+        ratio = ratioModel as RatioModel
         btCalculate.setOnClickListener { presenter.onCalculate() }
         tvTitle.addTextChangedListener {
             tvTitle.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
@@ -76,17 +74,15 @@ class CalculationFragment : BaseFragment(), CalculationView {
         MainActivity.Description = tvDescription
     }
 
-    override fun resetView() = with(binding) {
-        ratioModel = RatioModel()
-        presenter.apply { this.ratio = ratioModel }
-        ratio = ratioModel as RatioModel?
-        MainActivity.Title = tvTitle
-        MainActivity.Description = tvDescription
-    }
-
     override fun onResume() {
         super.onResume()
         presenter.onRecipeChanged()
+    }
+
+    override fun createNewRecipe(recipe: BaseRatioModel) = with(binding) {
+        ratio = recipe as RatioModel
+        MainActivity.Title = tvTitle
+        MainActivity.Description = tvDescription
     }
 
     override fun showCreateRecipeConfirmDialog() {
@@ -135,10 +131,5 @@ class CalculationFragment : BaseFragment(), CalculationView {
         etSaltGrams.setTextColor(requireContext().getColorResCompat(android.R.attr.textColorPrimary))
         tvSaltPercent.setTextColor(requireContext().getColorResCompat(android.R.attr.textColorSecondary))
         tvSaltGramsCorrection.setTextColor(requireContext().getColorResCompat(android.R.attr.textColorSecondary))
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = CalculationFragment()
     }
 }

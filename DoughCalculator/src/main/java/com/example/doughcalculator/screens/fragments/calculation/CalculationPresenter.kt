@@ -4,6 +4,7 @@ import androidx.lifecycle.asLiveData
 import com.example.doughcalculator.R
 import com.example.doughcalculator.common.mvp.BasePresenter
 import com.example.doughcalculator.data.BaseRatioModel
+import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.database.DoughRecipeDao
 import com.example.doughcalculator.screens.main.MainActivity
 import moxy.InjectViewState
@@ -90,12 +91,12 @@ class CalculationPresenter(var ratio: BaseRatioModel) : BasePresenter<Calculatio
             viewState.showCreateRecipeConfirmDialog()
             return
         }
-        viewState.resetView()
+        createNewRecipe()
     }
 
     fun createNewRecipe() {
-        ratio.hasUnsavedDate = false
-        viewState.resetView()
+        ratio = RatioModel()
+        viewState.createNewRecipe(ratio)
         resetValidation()
     }
 
