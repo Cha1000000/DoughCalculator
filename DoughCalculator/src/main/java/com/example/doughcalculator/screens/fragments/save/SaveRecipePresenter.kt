@@ -13,7 +13,7 @@ import org.koin.core.component.inject
 class SaveRecipePresenter : BasePresenter<SaveRecipeView>() {
 
     private val dataSource: DoughRecipeDao by inject()
-    lateinit var model: BaseRatioModel
+    private val model: BaseRatioModel by inject()
 
     fun onRecipeSave() {
         val entity = mapToEntity(model)

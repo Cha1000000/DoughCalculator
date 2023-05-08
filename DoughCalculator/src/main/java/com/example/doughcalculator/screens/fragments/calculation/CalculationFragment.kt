@@ -85,11 +85,11 @@ class CalculationFragment : BaseFragment(), CalculationView {
         )
     }
 
-    override fun showSaveRecipeDialog() {
-        findNavController().navigate(CalculationFragmentDirections.actionCalculationToSaving(ratioModel))
+    override fun showSaveRecipeScreen() {
+        findNavController().navigate(CalculationFragmentDirections.actionCalculationToSaving())
     }
 
-    override fun showOpenRecipeDialog() {
+    override fun showOpenRecipeScreen() {
         findNavController().navigate(CalculationFragmentDirections.actionCalculationToRecipes())
     }
 

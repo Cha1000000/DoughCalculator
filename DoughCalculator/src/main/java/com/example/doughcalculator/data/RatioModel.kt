@@ -207,32 +207,4 @@ class RatioModel : ViewModel(), BaseRatioModel, Serializable {
         }
         return clone as BaseRatioModel
     }
-
-    /*
-    constructor(parcel: Parcel) : this() {
-        recipeId = parcel.readLong()
-        isFavorite = parcel.readByte() != 0.toByte()
-        hasUnsavedDate = parcel.readByte() != 0.toByte()
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeLong(recipeId)
-        parcel.writeByte(if (isFavorite) 1 else 0)
-        parcel.writeByte(if (hasUnsavedDate) 1 else 0)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<RatioModel> {
-        override fun createFromParcel(parcel: Parcel): RatioModel {
-            return RatioModel(parcel)
-        }
-
-        override fun newArray(size: Int): Array<RatioModel?> {
-            return arrayOfNulls(size)
-        }
-    }
-     */
 }

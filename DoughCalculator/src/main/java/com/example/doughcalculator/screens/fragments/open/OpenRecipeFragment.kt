@@ -75,7 +75,7 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
     override fun showRemoveRecipeConfirmDialog(recipe: BaseRecipeModel) {
         context?.showAlertDialog(
             titleRes = R.string.delete_confirm_title,
-            msg = getString(R.string.recipe_delete_confirm_message, recipe.title),
+            msg = getString(R.string.recipe_delete_confirm_message, recipe.title.value),
             okCallback = { presenter.onDeleteConfirmClick(recipe) }
         )
     }

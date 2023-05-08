@@ -25,9 +25,6 @@
         android:name="com.example.doughcalculator.screens.fragments.save.SaveRecipeFragment"
         android:label="fragment_save_recipe"
         tools:layout="@layout/fragment_save_recipe">
-        <argument
-            android:name="ratioModel"
-            app:argType="com.example.doughcalculator.data.BaseRatioModel" />
         <action
             android:id="@+id/action_save_recipe_destination_to_calculation_destination"
             app:destination="@id/calculation_destination" />

@@ -66,7 +66,7 @@ class CalculationPresenter : BasePresenter<CalculationView>() {
             viewState.showError(R.string.alert_save_empty_data, R.string.error_alert_title_warning)
             return
         }
-        viewState.showSaveRecipeDialog()
+        viewState.showSaveRecipeScreen()
     }
 
     fun onShowOpenDialog() {
@@ -77,7 +77,7 @@ class CalculationPresenter : BasePresenter<CalculationView>() {
             )
             return
         }
-        viewState.showOpenRecipeDialog()
+        viewState.showOpenRecipeScreen()
     }
 
     fun onRecipeChanged() {

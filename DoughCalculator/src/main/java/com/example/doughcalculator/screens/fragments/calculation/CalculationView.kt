@@ -27,8 +27,8 @@ interface CalculationView: BaseView {
     fun hideSaltValidationMessage()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showSaveRecipeDialog()
+    fun showSaveRecipeScreen()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showOpenRecipeDialog()
+    fun showOpenRecipeScreen()
 }
