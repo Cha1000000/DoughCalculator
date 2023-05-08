@@ -44,6 +44,10 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
     fun onDeleteConfirmClick(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
             withIO { dataSource.deleteById(recipe.recipeId) }
+            if (model.recipeId == recipe.recipeId) {
+                model.recipeId = 0L
+                model.hasUnsavedDate = true
+            }
         }
     }
 

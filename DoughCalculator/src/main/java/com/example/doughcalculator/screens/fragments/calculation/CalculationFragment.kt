@@ -64,8 +64,8 @@ class CalculationFragment : BaseFragment(), CalculationView {
             setOnMenuItemClickListener { item ->
                 when (item?.itemId) {
                     R.id.mi_new -> presenter.onCreateNewRecipeClick()
-                    R.id.mi_open -> presenter.onShowOpenDialog()
-                    R.id.mi_save -> presenter.onShowSaveDialog()
+                    R.id.mi_open -> presenter.onShowOpenScreen()
+                    R.id.mi_save -> presenter.onShowSaveScreen()
                 }
                 true
             }

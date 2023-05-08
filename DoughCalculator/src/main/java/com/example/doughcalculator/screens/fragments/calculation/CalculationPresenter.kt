@@ -61,7 +61,7 @@ class CalculationPresenter : BasePresenter<CalculationView>() {
         viewState.hideKeyboard()
     }
 
-    fun onShowSaveDialog() {
+    fun onShowSaveScreen() {
         if (!ratio.isUpdate() && !ratio.hasUnsavedDate) {
             viewState.showError(R.string.alert_save_empty_data, R.string.error_alert_title_warning)
             return
@@ -69,7 +69,7 @@ class CalculationPresenter : BasePresenter<CalculationView>() {
         viewState.showSaveRecipeScreen()
     }
 
-    fun onShowOpenDialog() {
+    fun onShowOpenScreen() {
         if (!hasRecipes) {
             viewState.showError(
                 R.string.error_alert_description_no_saved_recipes,
