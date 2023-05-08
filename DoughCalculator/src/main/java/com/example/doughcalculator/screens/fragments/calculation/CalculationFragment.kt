@@ -70,6 +70,9 @@ class CalculationFragment : BaseFragment(), CalculationView {
                 true
             }
         }
+        setBackButtonPressedListener {
+            activity?.finish()
+        }
     }
 
     override fun onResume() {
