@@ -11,7 +11,6 @@ import com.example.doughcalculator.data.BaseRecipeModel
 import com.example.doughcalculator.database.DoughRecipeDao
 import com.example.doughcalculator.database.mapFromEntity
 import com.example.doughcalculator.database.mapToModels
-import com.example.doughcalculator.screens.main.MainActivity
 import moxy.InjectViewState
 import org.koin.core.component.inject
 
@@ -22,7 +21,7 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
     //private var recipeSource = MutableLiveData<List<DoughRecipeEntity>?>()
     private var myRecipes = MutableLiveData<List<BaseRecipeModel>?>()
     private val recipes = dataSource.getAllRecipesLive().asLiveData()
-    lateinit var model: BaseRatioModel
+    private val model: BaseRatioModel by inject()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -49,9 +48,7 @@ class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
         launchUI(createAlertErrorHandler()) {
             val recipeData = dataSource.getById(recipe.recipeId)
             model.mapFromEntity(recipeData)
-            MainActivity.Title.text = model.title
-            MainActivity.Description.text = model.description
-            viewState.openRecipe()
+            viewState.openRecipe(model)
         }
     }
 

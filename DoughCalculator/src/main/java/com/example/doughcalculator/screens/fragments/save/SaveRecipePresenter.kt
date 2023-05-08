@@ -6,7 +6,6 @@ import com.example.doughcalculator.common.mvp.BasePresenter
 import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.database.DoughRecipeDao
 import com.example.doughcalculator.database.mapToEntity
-import com.example.doughcalculator.screens.main.MainActivity
 import moxy.InjectViewState
 import org.koin.core.component.inject
 
@@ -31,9 +30,6 @@ class SaveRecipePresenter : BasePresenter<SaveRecipeView>() {
             }
         }
         model.hasUnsavedDate = false
-        MainActivity.Title.text = model.title
-        MainActivity.Description.text = model.description
         viewState.saveRecipe()
     }
-
 }

@@ -46,6 +46,7 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView {
             findNavController()
                 .navigate(SaveRecipeFragmentDirections.actionSaveRecipeDestinationToCalculationDestination())
         }
+        binding.lifecycleOwner = this
         return binding.root
     }
 

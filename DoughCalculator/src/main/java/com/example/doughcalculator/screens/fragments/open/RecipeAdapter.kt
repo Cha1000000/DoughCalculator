@@ -35,18 +35,6 @@ class RecipeAdapter(
 
     override fun getItemCount(): Int = recipeList.size
 
-    /*@SuppressLint("NotifyDataSetChanged")
-    fun addItem(item: BaseRecipeModel) {
-        recipeList.add(item)
-        notifyDataSetChanged()
-    }*/
-
-    fun deleteItem(item: BaseRecipeModel) {
-        val index = recipeList.indexOf(item)
-        recipeList.remove(item)
-        notifyItemRemoved(index)
-    }
-
     inner class RecipeHolder(binding: ViewholderRecipeItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -55,7 +43,7 @@ class RecipeAdapter(
         private val deleteButton: ImageButton = binding.btDelete
 
         fun bind(recipe: BaseRecipeModel) {
-            itemTitle.text = recipe.title
+            itemTitle.text = recipe.title.value
             deleteButton.setOnClickListener { onDeleteItemClick?.invoke(recipe) }
             starButton.setOnClickListener { onItemSetFavoriteClick?.invoke(recipe) }
             starButton.setImageResource(
@@ -70,5 +58,4 @@ class RecipeAdapter(
             return super.toString() + " '" + itemTitle.text + "'"
         }
     }
-
 }

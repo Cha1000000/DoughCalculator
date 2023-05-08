@@ -17,7 +17,6 @@ import com.example.doughcalculator.common.mvp.BaseFragment
 import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.databinding.FragmentCalculationBinding
-import com.example.doughcalculator.screens.main.MainActivity
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import org.koin.android.ext.android.get
@@ -31,7 +30,7 @@ class CalculationFragment : BaseFragment(), CalculationView {
     internal lateinit var presenter: CalculationPresenter
 
     @ProvidePresenter
-    fun providePresenter() = CalculationPresenter(ratioModel)
+    fun providePresenter() = CalculationPresenter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +42,7 @@ class CalculationFragment : BaseFragment(), CalculationView {
             container,
             false
         )
+        binding.lifecycleOwner = this
         initView()
         return binding.root
     }
@@ -70,19 +70,11 @@ class CalculationFragment : BaseFragment(), CalculationView {
                 true
             }
         }
-        MainActivity.Title = tvTitle
-        MainActivity.Description = tvDescription
     }
 
     override fun onResume() {
         super.onResume()
         presenter.onRecipeChanged()
-    }
-
-    override fun createNewRecipe(recipe: BaseRatioModel) = with(binding) {
-        ratio = recipe as RatioModel
-        MainActivity.Title = tvTitle
-        MainActivity.Description = tvDescription
     }
 
     override fun showCreateRecipeConfirmDialog() {
@@ -98,7 +90,7 @@ class CalculationFragment : BaseFragment(), CalculationView {
     }
 
     override fun showOpenRecipeDialog() {
-        findNavController().navigate(CalculationFragmentDirections.actionCalculationToRecipes(ratioModel))
+        findNavController().navigate(CalculationFragmentDirections.actionCalculationToRecipes())
     }
 
     override fun showError(@StringRes msgRes: Int, @StringRes titleRes: Int) {

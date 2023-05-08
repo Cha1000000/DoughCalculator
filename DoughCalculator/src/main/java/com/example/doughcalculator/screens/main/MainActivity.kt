@@ -1,9 +1,7 @@
 package com.example.doughcalculator.screens.main
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.widget.TextView
 import com.example.doughcalculator.R
 import moxy.MvpAppCompatActivity
 
@@ -25,11 +23,5 @@ class MainActivity : MvpAppCompatActivity() {
         const val FIRE_BUTTON_KEY_CODE = 293
         const val SHORT_ZERO = 0.toShort()
         lateinit var appContext: Context
-
-        @SuppressLint("StaticFieldLeak")
-        lateinit var Title: TextView
-
-        @SuppressLint("StaticFieldLeak")
-        lateinit var Description: TextView
     }
 }

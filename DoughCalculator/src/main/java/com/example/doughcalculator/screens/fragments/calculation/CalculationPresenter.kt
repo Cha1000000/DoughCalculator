@@ -4,19 +4,21 @@ import androidx.lifecycle.asLiveData
 import com.example.doughcalculator.R
 import com.example.doughcalculator.common.mvp.BasePresenter
 import com.example.doughcalculator.data.BaseRatioModel
-import com.example.doughcalculator.data.RatioModel
+import com.example.doughcalculator.data.clear
 import com.example.doughcalculator.database.DoughRecipeDao
 import com.example.doughcalculator.screens.main.MainActivity
 import moxy.InjectViewState
+import org.koin.core.component.get
 import org.koin.core.component.inject
 
 @InjectViewState
-class CalculationPresenter(var ratio: BaseRatioModel) : BasePresenter<CalculationView>() {
+class CalculationPresenter : BasePresenter<CalculationView>() {
 
     private val dataSource: DoughRecipeDao by inject()
-    private val recipes = dataSource.getAllRecipesLive().asLiveData()
+    private var ratio: BaseRatioModel = get()
     private var currentRecipeId = ratio.recipeId
     private var ratioOriginalState = ratio.clone()
+    private val recipes = dataSource.getAllRecipesLive().asLiveData()
     private var isError = false
     private var hasRecipes = false
     private var hasSaltValidationError = false
@@ -95,8 +97,7 @@ class CalculationPresenter(var ratio: BaseRatioModel) : BasePresenter<Calculatio
     }
 
     fun createNewRecipe() {
-        ratio = RatioModel()
-        viewState.createNewRecipe(ratio)
+        ratio.clear()
         resetValidation()
     }
 

@@ -1,15 +1,15 @@
 package com.example.doughcalculator.data
 
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.io.Serializable
 
-class RatioModel() : ViewModel(), BaseRatioModel, Parcelable {
+class RatioModel : ViewModel(), BaseRatioModel, Serializable {
+
     override var recipeId: Long = 0L
-
-    override var title: String = ""
-    override var description: String = ""
+    override var title = MutableLiveData("")
+    override var description = MutableLiveData("")
     override var isFavorite: Boolean = false
     override var hasUnsavedDate: Boolean = false
 
@@ -121,7 +121,7 @@ class RatioModel() : ViewModel(), BaseRatioModel, Parcelable {
         object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
-                waterGramCorrectionBindingVariable.set(value.toString())
+                waterGramCorrectionBindingVariable.set(value?.toString() ?: "")
             }
         }
     var waterGramCorrectionBindingVariable = ObservableField("")
@@ -130,7 +130,7 @@ class RatioModel() : ViewModel(), BaseRatioModel, Parcelable {
         object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
-                saltGramCorrectionBindingVariable.set(value.toString())
+                saltGramCorrectionBindingVariable.set(value?.toString() ?: "")
             }
         }
     var saltGramCorrectionBindingVariable = ObservableField("")
@@ -194,14 +194,6 @@ class RatioModel() : ViewModel(), BaseRatioModel, Parcelable {
         }
     var butterPercentBindingVariable = ObservableField("")
 
-    constructor(parcel: Parcel) : this() {
-        recipeId = parcel.readLong()
-        title = parcel.readString()!!
-        description = parcel.readString()!!
-        isFavorite = parcel.readByte() != 0.toByte()
-        hasUnsavedDate = parcel.readByte() != 0.toByte()
-    }
-
 
     override fun isUpdate(): Boolean = recipeId > 0L
 
@@ -216,10 +208,15 @@ class RatioModel() : ViewModel(), BaseRatioModel, Parcelable {
         return clone as BaseRatioModel
     }
 
+    /*
+    constructor(parcel: Parcel) : this() {
+        recipeId = parcel.readLong()
+        isFavorite = parcel.readByte() != 0.toByte()
+        hasUnsavedDate = parcel.readByte() != 0.toByte()
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(recipeId)
-        parcel.writeString(title)
-        parcel.writeString(description)
         parcel.writeByte(if (isFavorite) 1 else 0)
         parcel.writeByte(if (hasUnsavedDate) 1 else 0)
     }
@@ -237,4 +234,5 @@ class RatioModel() : ViewModel(), BaseRatioModel, Parcelable {
             return arrayOfNulls(size)
         }
     }
+     */
 }

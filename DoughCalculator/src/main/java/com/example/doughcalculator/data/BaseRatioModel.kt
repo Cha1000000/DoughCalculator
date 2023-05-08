@@ -25,5 +25,6 @@ interface BaseRatioModel : BaseRecipeModel, Serializable {
     var hasUnsavedDate: Boolean
 
     fun isUpdate(): Boolean
+
     fun clone(): BaseRatioModel
 }

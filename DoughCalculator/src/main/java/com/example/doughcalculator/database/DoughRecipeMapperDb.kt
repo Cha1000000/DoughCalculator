@@ -1,7 +1,7 @@
 package com.example.doughcalculator.database
 
+import androidx.lifecycle.MutableLiveData
 import com.example.doughcalculator.data.BaseRatioModel
-import com.example.doughcalculator.data.RatioModel
 import com.example.doughcalculator.data.RecipeTitleModel
 
 //class DoughRecipeMapperDb {
@@ -10,8 +10,8 @@ fun mapToDb(ratioModels: List<BaseRatioModel>) = ratioModels.map {
     with(it) {
         DoughRecipeEntity(
             recipeId,
-            title,
-            description,
+            title.value ?: "",
+            description.value ?: "",
             isFavorite,
             flourGram ?: 0,
             waterGram ?: 0,
@@ -34,8 +34,8 @@ fun mapToDb(ratioModels: List<BaseRatioModel>) = ratioModels.map {
 fun mapToEntity(ratioModel: BaseRatioModel) = with(ratioModel) {
     DoughRecipeEntity(
         recipeId,
-        title,
-        description,
+        title.value ?: "",
+        description.value ?: "",
         isFavorite,
         flourGram ?: 0,
         waterGram ?: 0,
@@ -55,14 +55,14 @@ fun mapToEntity(ratioModel: BaseRatioModel) = with(ratioModel) {
 }
 
 fun mapToModels(entities: List<DoughRecipeEntity>) = entities.map {
-    with(it) { RecipeTitleModel(recipeId, title, description, isFavorite) }
+    with(it) { RecipeTitleModel(recipeId, MutableLiveData(title), MutableLiveData(description), isFavorite) }
 }
 
 fun BaseRatioModel.mapFromEntity(entity: DoughRecipeEntity) =
     this.apply {
         recipeId = entity.recipeId
-        title = entity.title
-        description = entity.description
+        title.value = entity.title
+        description.value = entity.description
         isFavorite = entity.isFavorite
         flourGram = entity.flourGram
         waterGram = entity.waterGram

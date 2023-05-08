@@ -14,23 +14,14 @@ import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.BaseRecipeModel
 import com.example.doughcalculator.databinding.FragmentRecipesListBinding
 import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
 
 class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
 
     private lateinit var binding: FragmentRecipesListBinding
     private lateinit var recipeAdapter: RecipeAdapter
-    private lateinit var ratioModel: BaseRatioModel
 
     @InjectPresenter
     internal lateinit var presenter: OpenRecipePresenter
-
-    @ProvidePresenter
-    fun providePresenter() = OpenRecipePresenter().apply {
-        val args = OpenRecipeFragmentArgs.fromBundle(requireArguments())
-        ratioModel = args.ratioModel
-        model = ratioModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,9 +35,12 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
             false
         )
         setBackButtonPressedListener {
-            findNavController()
-                .navigate(OpenRecipeFragmentDirections.actionOpenRecipeDestinationToCalculationDestination())
+            findNavController().navigate(
+                    OpenRecipeFragmentDirections
+                        .actionOpenRecipeDestinationToCalculationDestination()
+                )
         }
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -73,7 +67,7 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
         }
     }
 
-    override fun openRecipe() {
+    override fun openRecipe(model: BaseRatioModel) {
         findNavController()
             .navigate(OpenRecipeFragmentDirections.actionOpenRecipeDestinationToCalculationDestination())
     }
@@ -84,9 +78,5 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
             msg = getString(R.string.recipe_delete_confirm_message, recipe.title),
             okCallback = { presenter.onDeleteConfirmClick(recipe) }
         )
-    }
-
-    override fun removeRecipe(item: BaseRecipeModel) {
-        recipeAdapter.deleteItem(item)
     }
 }
