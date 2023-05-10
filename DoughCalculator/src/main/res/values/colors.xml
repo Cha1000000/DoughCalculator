@@ -9,6 +9,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_gray">#51EDE9E9</color>
+    <color name="recipe_background">#E1DDD2</color>
 
     <!-- text -->
     <color name="text_white">#ffffff</color>
