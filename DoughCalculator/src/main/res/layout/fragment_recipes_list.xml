@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".screens.fragments.open.OpenRecipeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="fill_vertical"
-        android:background="@drawable/background_notepad">
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/recipes_toolbar"
+            style="@style/AppToolbar"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="@string/screen_title_open_recipe" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="fill_vertical"
+            android:background="@drawable/background_notepad">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginVertical="16dp"
             android:layout_weight="1"
             tools:listitem="@layout/viewholder_recipe_item" />
 
+        </LinearLayout>
+
     </LinearLayout>
+
 </layout>

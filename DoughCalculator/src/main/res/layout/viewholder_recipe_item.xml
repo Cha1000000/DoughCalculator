@@ -16,9 +16,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:backgroundTint="@android:color/transparent"
-        android:paddingVertical="8dp"
+        android:orientation="horizontal"
         android:paddingHorizontal="4dp"
-        android:orientation="horizontal">
+        android:paddingVertical="8dp">
 
         <ImageButton
             android:id="@+id/bt_star"
@@ -36,10 +36,10 @@
             android:id="@+id/tv_recipe_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textAppearance="@style/RobotoRegular.Black.20"
+            android:paddingTop="6dp"
+            android:textAppearance="@style/MenuTextAppearance"
             tools:text="Recipe Title" />
 
         <!--    <androidx.cardview.widget.CardView-->

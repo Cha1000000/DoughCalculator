@@ -12,76 +12,90 @@
             type="com.example.doughcalculator.data.RatioModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/frameLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/title_input_layout_login"
-            style="@style/TextInputLayout"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/recipe_title"
-            app:counterEnabled="true"
-            app:counterMaxLength="20"
-            app:endIconMode="clear_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/save_toolbar"
+            style="@style/AppToolbar"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="@string/screen_title_save_recipe" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_title"
-                style="@style/TextInputEditText.Normal"
-                android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/title_input_layout_login"
+                style="@style/TextInputLayout"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/recipe_title"
+                app:counterEnabled="true"
+                app:counterMaxLength="22"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_title"
+                    style="@style/TextInputEditText.Normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="22"
+                    android:maxLines="1"
+                    android:text="@={ratio.title}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/description_input_layout_login"
+                style="@style/TextInputLayout"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/text_field_description"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_input_layout_login">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_description"
+                    style="@style/TextInputEditText.Regular"
+                    android:textStyle="italic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:maxLength="140"
+                    android:maxLines="8"
+                    android:minHeight="50dp"
+                    android:text="@={ratio.description}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/bt_save"
+                style="@style/action_button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:text="@={ratio.title}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="14dp"
+                android:elevation="8dp"
+                android:text="@string/button_save_text"
+                app:icon="@drawable/ic_save"
+                app:iconPadding="2dp"
+                app:iconSize="36dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description_input_layout_login"
+                tools:ignore="TextContrastCheck" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/description_input_layout_login"
-            style="@style/TextInputLayout"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/text_field_description"
-            app:endIconMode="clear_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_input_layout_login">
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_description"
-                style="@style/TextInputEditText.Regular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:maxLength="140"
-                android:maxLines="8"
-                android:minHeight="50dp"
-                android:text="@={ratio.description}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/bt_save"
-            style="@style/action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:text="@string/button_save_text"
-            android:elevation="8dp"
-            app:icon="@drawable/ic_save"
-            app:iconPadding="2dp"
-            app:iconSize="36dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description_input_layout_login"
-            tools:ignore="TextContrastCheck" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

@@ -19,7 +19,7 @@ import org.koin.android.ext.android.inject
 class SaveRecipeFragment : BaseFragment(), SaveRecipeView {
 
     private lateinit var binding: FragmentSaveRecipeBinding
-    private val ratioModel: BaseRatioModel  by inject()
+    private val ratioModel: BaseRatioModel by inject()
 
     @InjectPresenter
     internal lateinit var presenter: SaveRecipePresenter
@@ -38,12 +38,8 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView {
             container,
             false
         )
-        initFragment()
-        setBackButtonPressedListener {
-            findNavController()
-                .navigate(SaveRecipeFragmentDirections.actionSaveRecipeDestinationToCalculationDestination())
-        }
         binding.lifecycleOwner = this
+        initFragment()
         return binding.root
     }
 
@@ -52,6 +48,18 @@ class SaveRecipeFragment : BaseFragment(), SaveRecipeView {
         btSave.isEnabled = false
         btSave.setOnClickListener { presenter.onRecipeSave() }
         textTitle.addTextChangedListener { btSave.isEnabled = it?.isNotEmpty() ?: false }
+        saveToolbar.setNavigationOnClickListener {
+            findNavController().navigate(
+                SaveRecipeFragmentDirections
+                    .actionSaveRecipeDestinationToCalculationDestination()
+            )
+        }
+        setBackButtonPressedListener {
+            findNavController().navigate(
+                    SaveRecipeFragmentDirections
+                        .actionSaveRecipeDestinationToCalculationDestination()
+                )
+        }
     }
 
     override fun saveRecipe() {

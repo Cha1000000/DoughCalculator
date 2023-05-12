@@ -33,8 +33,7 @@
         <item name="android:textSize">@dimen/text_input_layout_edit_text_size</item>
         <item name="android:textColorHint">@color/edit_text_hint_selector</item>
         <item name="android:imeOptions">actionNext</item>
-        <item name="android:importantForAutofill">no</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/halogen</item>
     </style>
 
     <style name="TextInputEditText.Normal">
@@ -46,7 +45,7 @@
 
     <style name="TextInputEditText.Regular" parent="TextInputEditText.Normal">
         <item name="android:textSize">@dimen/text_input_layout_edit_text_size_medium</item>
-        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:fontFamily">@font/halogen</item>
         <item name="android:gravity">fill_horizontal</item>
     </style>
 
@@ -55,6 +54,7 @@
         <item name="android:digits">0123456789</item>
         <item name="android:maxLength">4</item>
         <item name="android:hint">@string/hint_zero</item>
+        <item name="android:elegantTextHeight">true</item>
     </style>
 
     <style name="TextInputLayoutHint">
@@ -69,7 +69,7 @@
         <item name="android:elegantTextHeight">true</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">28sp</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/halogen</item>
     </style>
 
 </resources>

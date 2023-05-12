@@ -34,14 +34,24 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
             container,
             false
         )
+        binding.lifecycleOwner = this
+        initView()
+        return binding.root
+    }
+
+    private fun initView() = with(binding) {
+        recipesToolbar.setNavigationOnClickListener {
+            findNavController().navigate(
+                OpenRecipeFragmentDirections
+                    .actionOpenRecipeDestinationToCalculationDestination()
+            )
+        }
         setBackButtonPressedListener {
             findNavController().navigate(
-                    OpenRecipeFragmentDirections
-                        .actionOpenRecipeDestinationToCalculationDestination()
-                )
+                OpenRecipeFragmentDirections
+                    .actionOpenRecipeDestinationToCalculationDestination()
+            )
         }
-        binding.lifecycleOwner = this
-        return binding.root
     }
 
     override fun loadRecipeList(items: List<BaseRecipeModel>) {

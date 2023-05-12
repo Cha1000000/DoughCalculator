@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextInputEditText" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@color/light_gray</item>
+        <item name="android:textSize">@dimen/text_input_layout_edit_text_size</item>
+        <item name="android:textColorHint">@color/edit_text_hint_selector</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:importantForAutofill">no</item>
+        <item name="android:fontFamily">@font/halogen</item>
+    </style>
+</resources>
