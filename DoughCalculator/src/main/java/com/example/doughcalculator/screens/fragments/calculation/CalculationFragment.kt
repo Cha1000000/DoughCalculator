@@ -6,6 +6,7 @@ import android.view.*
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -50,13 +51,6 @@ class CalculationFragment : BaseFragment(), CalculationView {
     @SuppressLint("RestrictedApi")
     private fun initView() = with(binding) {
         ratio = ratioModel as RatioModel
-        btCalculate.setOnClickListener { presenter.onCalculate() }
-        tvTitle.addTextChangedListener {
-            tvTitle.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
-        }
-        tvDescription.addTextChangedListener {
-            tvDescription.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
-        }
         toolbarMain.apply {
             menu.apply {
                 (this as MenuBuilder).setOptionalIconsVisible(true)
@@ -70,6 +64,15 @@ class CalculationFragment : BaseFragment(), CalculationView {
                 true
             }
         }
+        tvTitle.addTextChangedListener {
+            tvTitle.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
+        }
+        tvDescription.addTextChangedListener {
+            tvDescription.visibility = if (it?.isNotEmpty()!!) View.VISIBLE else View.GONE
+        }
+        calculationContainer.children.forEach { it.setOnClickListener { hideKeyboard() } }
+        calculationTable.setOnClickListener { hideKeyboard() }
+        btCalculate.setOnClickListener { presenter.onCalculate() }
         setBackButtonPressedListener {
             activity?.finish()
         }

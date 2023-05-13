@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,33 +12,35 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:id="@+id/calculation_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_main">
+        android:orientation="vertical"
+        android:background="@drawable/background_main"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarMain"
             style="@style/AppToolbar"
-            app:popupTheme="@style/ToolbarMenuTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/main_menu"
+            app:popupTheme="@style/ToolbarMenuTheme"
             app:title="@string/app_name" />
 
         <TextView
             android:id="@+id/tv_title"
             style="@style/ingredient_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:text="@={ratio.title}"
             android:visibility="gone"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbarMain"
-            android:text="@={ratio.title}"
             tools:ignore="TextContrastCheck"
             tools:text="Название рецепа"
             tools:visibility="visible" />
@@ -47,18 +48,16 @@
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TableLayout
-                android:id="@+id/tableLayout"
+                android:id="@+id/calculation_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
                 android:stretchColumns="0,1,2,3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,9 +65,8 @@
 
                 <TableRow
                     style="@style/table_row"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="0dp">
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp">
 
                     <TextView
                         style="@style/table_title"
@@ -105,7 +103,7 @@
 
                 <TableRow
                     style="@style/table_row"
-                    android:layout_width="match_parent">
+                    android:layout_marginTop="3dp">
 
                     <TextView
                         style="@style/ingredient_title"
@@ -139,9 +137,7 @@
 
                 </TableRow>
 
-                <TableRow
-                    style="@style/table_row"
-                    android:layout_width="match_parent">
+                <TableRow style="@style/table_row">
 
                     <TextView
                         style="@style/ingredient_title"
@@ -184,9 +180,7 @@
                     android:visibility="gone"
                     tools:visibility="visible" />
 
-                <TableRow
-                    style="@style/table_row"
-                    android:layout_width="match_parent">
+                <TableRow style="@style/table_row">
 
                     <TextView
                         style="@style/ingredient_title"
@@ -229,9 +223,7 @@
                     android:visibility="gone"
                     tools:visibility="visible" />
 
-                <TableRow
-                    style="@style/table_row"
-                    android:layout_width="match_parent">
+                <TableRow style="@style/table_row">
 
                     <TextView
                         style="@style/ingredient_title"
@@ -263,9 +255,7 @@
 
                 </TableRow>
 
-                <TableRow
-                    style="@style/table_row"
-                    android:layout_width="match_parent">
+                <TableRow style="@style/table_row">
 
                     <TextView
                         style="@style/ingredient_title"
@@ -298,37 +288,35 @@
 
                 <TextView
                     android:id="@+id/tv_description"
+                    style="@style/text_description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:layout_height="match_parent"
                     android:text="@={ratio.description}"
+                    android:visibility="gone"
                     tools:text="Текст описания рецепта"
-                    tools:visibility="visible"
-                    style="@style/text_description" />
+                    tools:visibility="visible" />
             </TableLayout>
 
         </ScrollView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/calculation_button_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="bottom"
+            android:gravity="bottom|center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scroll_view">
 
             <Button
                 android:id="@+id/bt_calculate"
                 style="@style/action_button"
                 android:text="@string/button_calculate_text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TextContrastCheck"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
