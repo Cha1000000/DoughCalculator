@@ -92,10 +92,12 @@ class CalculationFragment : BaseFragment(), CalculationView {
     }
 
     override fun showSaveRecipeScreen() {
+        hideKeyboard()
         findNavController().navigate(CalculationFragmentDirections.actionCalculationToSaving())
     }
 
     override fun showOpenRecipeScreen() {
+        hideKeyboard()
         findNavController().navigate(CalculationFragmentDirections.actionCalculationToRecipes())
     }
 

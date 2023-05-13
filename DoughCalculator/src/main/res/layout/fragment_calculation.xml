@@ -6,26 +6,25 @@
     tools:context=".screens.fragments.calculation.CalculationFragment">
 
     <data>
+
         <variable
             name="ratio"
             type="com.example.doughcalculator.data.RatioModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/calculation_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@drawable/background_main"
+        android:fitsSystemWindows="true"
         android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarMain"
             style="@style/AppToolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/main_menu"
             app:popupTheme="@style/ToolbarMenuTheme"
             app:title="@string/app_name" />
@@ -35,12 +34,10 @@
             style="@style/ingredient_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="center|top"
             android:text="@={ratio.title}"
             android:visibility="gone"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbarMain"
             tools:ignore="TextContrastCheck"
             tools:text="Название рецепа"
             tools:visibility="visible" />
@@ -48,20 +45,15 @@
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_height="0dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="1">
 
             <TableLayout
                 android:id="@+id/calculation_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="0,1,2,3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:stretchColumns="0,1,2,3">
 
                 <TableRow
                     style="@style/table_row"
@@ -299,25 +291,13 @@
 
         </ScrollView>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/calculation_button_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="bottom|center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scroll_view">
+        <Button
+            android:id="@+id/bt_calculate"
+            style="@style/action_button"
+            android:layout_gravity="center_horizontal|top"
+            android:text="@string/button_calculate_text"
+            tools:ignore="TextContrastCheck" />
 
-            <Button
-                android:id="@+id/bt_calculate"
-                style="@style/action_button"
-                android:text="@string/button_calculate_text"
-                tools:ignore="TextContrastCheck"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>
