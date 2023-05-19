@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ToolbarTextAppearance">
+        <item name="android:fontFamily">@font/riffic_bold</item>
+        <item name="android:textColor">@color/orange_700</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowColor">@color/black</item>
+    </style>
+
+    <style name="ToolbarTextAppearance.Title">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="ToolbarTextAppearance.Subtitle">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppToolbar">
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
+<!--        <item name="theme">?attr/actionBarTheme</item>-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?colorPrimary</item>
+        <item name="android:elevation">8dp</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="titleTextAppearance">@style/ToolbarTextAppearance.Title</item>
+    </style>
+
+    <style name="MenuTextAppearance">
+        <item name="android:fontFamily">@font/halogen</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ToolbarMenuTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/orange_700</item>
+        <item name="android:itemTextAppearance">@style/MenuTextAppearance</item>
+    </style>
+
+</resources>

@@ -1,8 +1,9 @@
 package com.example.doughcalculator.data
 
 import androidx.databinding.ObservableField
+import java.io.Serializable
 
-interface BaseRatioModel : BaseRecipeModel {
+interface BaseRatioModel : BaseRecipeModel, Serializable {
 
     var flourGram: Short?
     var waterGram: Short?
@@ -24,5 +25,6 @@ interface BaseRatioModel : BaseRecipeModel {
     var hasUnsavedDate: Boolean
 
     fun isUpdate(): Boolean
+
     fun clone(): BaseRatioModel
 }

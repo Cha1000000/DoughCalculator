@@ -1,5 +1,6 @@
 package com.example.doughcalculator.common.mvp
 
+import androidx.activity.addCallback
 import com.example.doughcalculator.common.extensions.hideKeyboard
 import moxy.MvpAppCompatFragment
 
@@ -11,11 +12,9 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseView {
         view?.hideKeyboard()
     }
 
-    protected fun closeFragment() {
-        parentFragmentManager.popBackStack()
-        parentFragmentManager
-            .beginTransaction()
-            .remove(this)
-            .commit()
+    protected fun setBackButtonPressedListener(navigation: () -> Unit) {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            navigation()
+        }
     }
 }

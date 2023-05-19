@@ -1,35 +1,35 @@
 package com.example.doughcalculator.screens.fragments.save
 
-import com.example.doughcalculator.common.extensions.launchIO
+import com.example.doughcalculator.common.extensions.launchUI
+import com.example.doughcalculator.common.extensions.withIO
 import com.example.doughcalculator.common.mvp.BasePresenter
 import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.database.DoughRecipeDao
 import com.example.doughcalculator.database.mapToEntity
-import com.example.doughcalculator.screens.main.MainActivity
 import moxy.InjectViewState
 import org.koin.core.component.inject
 
 @InjectViewState
-class SaveRecipePresenter(private val ratioModel: BaseRatioModel) :
-    BasePresenter<SaveRecipeView>() {
+class SaveRecipePresenter : BasePresenter<SaveRecipeView>() {
 
     private val dataSource: DoughRecipeDao by inject()
+    private val model: BaseRatioModel by inject()
 
     fun onRecipeSave() {
-        val entity = mapToEntity(ratioModel)
-        if (ratioModel.isUpdate()) {
-            launchIO(createAlertErrorHandler()) {
-                dataSource.update(entity)
+        val entity = mapToEntity(model)
+        if (model.isUpdate()) {
+            launchUI(createAlertErrorHandler()) {
+                withIO { dataSource.update(entity) }
             }
         } else {
-            launchIO(createAlertErrorHandler()) {
-                dataSource.insert(entity)
-                ratioModel.recipeId = dataSource.getByTitle(entity.title).recipeId
+            launchUI(createAlertErrorHandler()) {
+                withIO {
+                    dataSource.insert(entity)
+                    model.recipeId = dataSource.getByTitle(entity.title).recipeId
+                }
             }
         }
-        ratioModel.hasUnsavedDate = false
-        MainActivity.Title.text = ratioModel.title
-        MainActivity.Description.text = ratioModel.description
+        model.hasUnsavedDate = false
         viewState.saveRecipe()
     }
 }

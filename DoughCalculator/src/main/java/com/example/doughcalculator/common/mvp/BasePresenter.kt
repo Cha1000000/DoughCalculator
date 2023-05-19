@@ -11,16 +11,13 @@ import moxy.MvpPresenter
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class BasePresenter<View : BaseView> : MvpPresenter<View>(), CoroutineScope,
-    KoinComponent {
+abstract class BasePresenter<View : BaseView> : MvpPresenter<View>(), CoroutineScope, KoinComponent {
 
     private val job = SupervisorJob()
-
     override val coroutineContext = Dispatchers.Main + job
 
-    protected val errorAlertShower: ErrorAlertShower by inject()
+    private val errorAlertShower: ErrorAlertShower by inject()
     private val exceptionInfoList = mutableListOf<ExceptionInfo>()
-
 
     protected fun createAlertErrorHandler(
         callback: ((ExceptionInfo) -> Unit)? = null,

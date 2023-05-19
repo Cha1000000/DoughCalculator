@@ -1,13 +1,15 @@
 package com.example.doughcalculator.data
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.io.Serializable
 
-class RatioModel : ViewModel(), BaseRatioModel {
+class RatioModel : ViewModel(), BaseRatioModel, Serializable {
+
     override var recipeId: Long = 0L
-
-    override var title: String = ""
-    override var description: String = ""
+    override var title = MutableLiveData("")
+    override var description = MutableLiveData("")
     override var isFavorite: Boolean = false
     override var hasUnsavedDate: Boolean = false
 
@@ -119,7 +121,7 @@ class RatioModel : ViewModel(), BaseRatioModel {
         object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
-                waterGramCorrectionBindingVariable.set(value.toString())
+                waterGramCorrectionBindingVariable.set(value?.toString() ?: "")
             }
         }
     var waterGramCorrectionBindingVariable = ObservableField("")
@@ -128,7 +130,7 @@ class RatioModel : ViewModel(), BaseRatioModel {
         object : ObservableField<Short?>() {
             override fun set(value: Short?) {
                 super.set(value)
-                saltGramCorrectionBindingVariable.set(value.toString())
+                saltGramCorrectionBindingVariable.set(value?.toString() ?: "")
             }
         }
     var saltGramCorrectionBindingVariable = ObservableField("")
