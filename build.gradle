@@ -3,10 +3,10 @@
 buildscript {
     ext {
         kotlin_version = "1.8.21"
-        room_version = "2.5.1"
+        room_version = "2.5.2"
         lifecycle_version = "2.6.1"
         coroutines_version = '1.7.0'
-        version_navigation = "2.5.3"
+        version_navigation = "2.6.0"
     }
     repositories {
         google()
