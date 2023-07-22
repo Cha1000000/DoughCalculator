@@ -1,22 +1,24 @@
-package com.example.doughcalculator.screens.main
+package com.example.doughcalculator.screens.fragments.calculation
 
 import androidx.lifecycle.asLiveData
 import com.example.doughcalculator.R
+import com.example.doughcalculator.common.mvp.BasePresenter
 import com.example.doughcalculator.data.BaseRatioModel
+import com.example.doughcalculator.data.clear
 import com.example.doughcalculator.database.DoughRecipeDao
-import com.example.doughcalculator.screens.main.MainActivity.Companion.SHORT_ZERO
+import com.example.doughcalculator.screens.main.MainActivity
 import moxy.InjectViewState
-import moxy.MvpPresenter
-import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import org.koin.core.component.inject
 
 @InjectViewState
-class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinComponent {
+class CalculationPresenter : BasePresenter<CalculationView>() {
 
     private val dataSource: DoughRecipeDao by inject()
-    private val recipes = dataSource.getAllRecipesLive().asLiveData()
+    private var ratio: BaseRatioModel = get()
     private var currentRecipeId = ratio.recipeId
     private var ratioOriginalState = ratio.clone()
+    private val recipes = dataSource.getAllRecipesLive().asLiveData()
     private var isError = false
     private var hasRecipes = false
     private var hasSaltValidationError = false
@@ -29,23 +31,9 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
         }
     }
 
-    fun onCreateNewRecipeClick() {
-        if (ratio.hasUnsavedDate) {
-            viewState.showCreateRecipeConfirmDialog()
-            return
-        }
-        viewState.resetView()
-    }
-
-    fun createNewRecipe() {
-        ratio.hasUnsavedDate = false
-        viewState.resetView()
-        resetValidation()
-    }
-
     fun onCalculate() {
         if (ratio.flourGram == null
-            || ratio.flourGram!! == SHORT_ZERO
+            || ratio.flourGram!! == MainActivity.SHORT_ZERO
         ) {
             viewState.showError(R.string.error_invalid_flour_input)
             return
@@ -59,7 +47,7 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
         calculateButterPercent()
 
         if (ratio.flourGramCorrection != null
-            && ratio.flourGramCorrection!! > SHORT_ZERO
+            && ratio.flourGramCorrection!! > MainActivity.SHORT_ZERO
         ) {
             recalculateWaterGram()
             recalculateSaltGram()
@@ -70,18 +58,18 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
         if (getIsCalculationChanged())
             ratio.hasUnsavedDate = true
 
-        viewState.closeKeyboard()
+        viewState.hideKeyboard()
     }
 
-    fun onShowSaveDialog() {
+    fun onShowSaveScreen() {
         if (!ratio.isUpdate() && !ratio.hasUnsavedDate) {
             viewState.showError(R.string.alert_save_empty_data, R.string.error_alert_title_warning)
             return
         }
-        viewState.showSaveRecipeDialog()
+        viewState.showSaveRecipeScreen()
     }
 
-    fun onShowOpenDialog() {
+    fun onShowOpenScreen() {
         if (!hasRecipes) {
             viewState.showError(
                 R.string.error_alert_description_no_saved_recipes,
@@ -89,7 +77,7 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
             )
             return
         }
-        viewState.showOpenRecipeDialog()
+        viewState.showOpenRecipeScreen()
     }
 
     fun onRecipeChanged() {
@@ -98,6 +86,19 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
             ratioOriginalState = ratio.clone()
             resetValidation()
         }
+    }
+
+    fun onCreateNewRecipeClick() {
+        if (ratio.hasUnsavedDate) {
+            viewState.showCreateRecipeConfirmDialog()
+            return
+        }
+        createNewRecipe()
+    }
+
+    fun createNewRecipe() {
+        ratio.clear()
+        resetValidation()
     }
 
     private fun resetValidation() {
@@ -131,7 +132,7 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun calculateWaterPercent() {
         if (ratio.waterGram == null
-            || ratio.waterGram!! == SHORT_ZERO
+            || ratio.waterGram!! == MainActivity.SHORT_ZERO
         ) {
             viewState.showError(R.string.error_invalid_water_input)
             isError = true
@@ -153,7 +154,7 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun calculateSaltPercent() {
         if (ratio.saltGram == null
-            || ratio.saltGram!! == SHORT_ZERO
+            || ratio.saltGram!! == MainActivity.SHORT_ZERO
         ) {
             viewState.showError(R.string.error_invalid_salt_input)
             isError = true
@@ -175,7 +176,7 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun calculateSugarPercent() {
         if (ratio.sugarGram == null
-            || ratio.sugarGram!! == SHORT_ZERO
+            || ratio.sugarGram!! == MainActivity.SHORT_ZERO
         ) {
             ratio.sugarPercent.set(null)
             return
@@ -185,7 +186,7 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun calculateButterPercent() {
         if (ratio.butterGram == null
-            || ratio.butterGram!! == SHORT_ZERO
+            || ratio.butterGram!! == MainActivity.SHORT_ZERO
         ) {
             ratio.butterPercent.set(null)
             return
@@ -215,7 +216,7 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun recalculateSugarGram() {
         if (ratio.sugarGram == null
-            || ratio.sugarGram!! == SHORT_ZERO
+            || ratio.sugarGram!! == MainActivity.SHORT_ZERO
         ) {
             ratio.sugarGramCorrection.set(null)
             return
@@ -231,7 +232,7 @@ class MainPresenter(var ratio: BaseRatioModel) : MvpPresenter<MainView>(), KoinC
 
     private fun recalculateButterGram() {
         if (ratio.butterGram == null
-            || ratio.butterGram!! == SHORT_ZERO
+            || ratio.butterGram!! == MainActivity.SHORT_ZERO
         ) {
             ratio.butterGramCorrection.set(null)
             return

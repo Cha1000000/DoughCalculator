@@ -5,29 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doughcalculator.R
-import com.example.doughcalculator.common.callback.OnBackPressedListener
+import com.example.doughcalculator.common.extensions.showAlertDialog
 import com.example.doughcalculator.common.mvp.BaseFragment
+import com.example.doughcalculator.data.BaseRatioModel
 import com.example.doughcalculator.data.BaseRecipeModel
 import com.example.doughcalculator.databinding.FragmentRecipesListBinding
-import com.example.doughcalculator.common.extensions.showAlertDialog
-import com.example.doughcalculator.data.BaseRatioModel
 import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
-import org.koin.core.component.KoinComponent
 
-class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener, KoinComponent {
+class OpenRecipeFragment : BaseFragment(), OpenRecipeView {
 
     private lateinit var binding: FragmentRecipesListBinding
     private lateinit var recipeAdapter: RecipeAdapter
-    private lateinit var ratioModel: BaseRatioModel
 
     @InjectPresenter
     internal lateinit var presenter: OpenRecipePresenter
-
-    @ProvidePresenter
-    fun providePresenter() = OpenRecipePresenter(ratioModel)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,10 +35,30 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
             false
         )
         binding.lifecycleOwner = this
+        initView()
         return binding.root
     }
 
-    private fun initList(recipes: List<BaseRecipeModel>) {
+    private fun initView() = with(binding) {
+        recipesToolbar.setNavigationOnClickListener {
+            findNavController().navigate(
+                OpenRecipeFragmentDirections
+                    .actionOpenRecipeDestinationToCalculationDestination()
+            )
+        }
+        setBackButtonPressedListener {
+            findNavController().navigate(
+                OpenRecipeFragmentDirections
+                    .actionOpenRecipeDestinationToCalculationDestination()
+            )
+        }
+    }
+
+    override fun loadRecipeList(items: List<BaseRecipeModel>) {
+        initRecycler(items)
+    }
+
+    private fun initRecycler(recipes: List<BaseRecipeModel>) {
         binding.apply {
             rcView.setHasFixedSize(true)
             rcView.layoutManager =
@@ -63,37 +77,16 @@ class OpenRecipeFragment : BaseFragment(), OpenRecipeView, OnBackPressedListener
         }
     }
 
-    override fun loadRecipeList(items: List<BaseRecipeModel>) {
-        initList(items)
-    }
-
-    override fun openRecipe() {
-        closeFragment()
+    override fun openRecipe(model: BaseRatioModel) {
+        findNavController()
+            .navigate(OpenRecipeFragmentDirections.actionOpenRecipeDestinationToCalculationDestination())
     }
 
     override fun showRemoveRecipeConfirmDialog(recipe: BaseRecipeModel) {
         context?.showAlertDialog(
             titleRes = R.string.delete_confirm_title,
-            msg = getString(R.string.recipe_delete_confirm_message, recipe.title),
+            msg = getString(R.string.recipe_delete_confirm_message, recipe.title.value),
             okCallback = { presenter.onDeleteConfirmClick(recipe) }
         )
     }
-
-    override fun removeRecipe(item: BaseRecipeModel) {
-        recipeAdapter.deleteItem(item)
-    }
-
-    override fun onBackPressed(): Boolean {
-        closeFragment()
-        return true
-    }
-
-    companion object {
-        @JvmStatic
-        fun getInstance(model: BaseRatioModel) =
-            OpenRecipeFragment().apply { this.ratioModel = model }
-
-        //const val COLUMN_COUNT = 1
-    }
-
 }

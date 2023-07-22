@@ -1,6 +1,5 @@
 package com.example.doughcalculator.screens.fragments.open
 
-//import com.example.doughcalculator.database.DoughRecipeEntity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.example.doughcalculator.common.extensions.launchUI
@@ -11,46 +10,30 @@ import com.example.doughcalculator.data.BaseRecipeModel
 import com.example.doughcalculator.database.DoughRecipeDao
 import com.example.doughcalculator.database.mapFromEntity
 import com.example.doughcalculator.database.mapToModels
-import com.example.doughcalculator.screens.main.MainActivity
 import moxy.InjectViewState
 import org.koin.core.component.inject
 
 @InjectViewState
-class OpenRecipePresenter(private val ratioModel: BaseRatioModel) : BasePresenter<OpenRecipeView>() {
+class OpenRecipePresenter : BasePresenter<OpenRecipeView>() {
 
     private val dataSource: DoughRecipeDao by inject()
-    //private var recipeSource = MutableLiveData<List<DoughRecipeEntity>?>()
     private var myRecipes = MutableLiveData<List<BaseRecipeModel>?>()
     private val recipes = dataSource.getAllRecipesLive().asLiveData()
+    private val model: BaseRatioModel by inject()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        //loadRecipes()
         recipes.observeForever { allRecipes ->
             myRecipes.value = mapToModels(allRecipes)
             viewState.loadRecipeList(myRecipes.value!!)
         }
     }
 
-    /*private fun loadRecipes() {
-        launchUI(createAlertErrorHandler()) {
-            recipeSource.value = withIO { dataSource.getAllRecipes() }
-            recipeSource.value.let { source ->
-                if (source != null) {
-                    myRecipes.value = mapToModels(source)
-                    viewState.loadRecipeList(myRecipes.value!!)
-                }
-            }
-        }
-    }*/
-
     fun onRecipeSelect(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
             val recipeData = dataSource.getById(recipe.recipeId)
-            ratioModel.mapFromEntity(recipeData)
-            MainActivity.Title.text = ratioModel.title
-            MainActivity.Description.text = ratioModel.description
-            viewState.openRecipe()
+            model.mapFromEntity(recipeData)
+            viewState.openRecipe(model)
         }
     }
 
@@ -61,7 +44,10 @@ class OpenRecipePresenter(private val ratioModel: BaseRatioModel) : BasePresente
     fun onDeleteConfirmClick(recipe: BaseRecipeModel) {
         launchUI(createAlertErrorHandler()) {
             withIO { dataSource.deleteById(recipe.recipeId) }
-            //viewState.removeRecipe(recipe)
+            if (model.recipeId == recipe.recipeId) {
+                model.recipeId = 0L
+                model.hasUnsavedDate = true
+            }
         }
     }
 
